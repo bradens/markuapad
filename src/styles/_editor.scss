@@ -1,6 +1,15 @@
 .editor {
   @extend %box-shadow;
+//  @include pad($editor-padding);
+  @include flex(1);
   background: $editor-background;
-  @include pad($editor-padding);
   min-height: $editor-min-height;
+
+  // Overrides from ace editor
+  &.emacs-mode .ace_cursor {
+    background-color: #222;
+    border: none !important;
+    border-left: 1px solid #222 !important;
+    width: 2px !important;
+  }
 }

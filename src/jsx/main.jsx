@@ -9,8 +9,10 @@ class Main extends React.Component {
     return (
       <section className="markuapad large-container">
         <Toolbar />
-        <FileBrowser />
-        <Editor />
+        <section className="main-view">
+          <FileBrowser />
+          <Editor />
+        </section>
       </section>
     );
   }

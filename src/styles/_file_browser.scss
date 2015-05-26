@@ -1,0 +1,64 @@
+.markuapad .file-browser {
+  @extend %box-shadow;
+
+  @include flex-basis(300px);
+  @include pad($file-browser-padding 0 $file-browser-padding $file-browser-padding);
+  @include user-select(none);
+  @include transition(flex-basis $base-transition-duration/2 ease-in-out);
+
+  background: $files-background;
+  min-height: $files-min-height;
+
+  .files-list-item a {
+    @include border-left-radius(3px);
+    @include transition(background $base-transition-duration/2 ease-in-out);
+    cursor: pointer;
+    display: block;
+    padding: .2em .5em;
+
+    &:hover {
+      background: rgba(0, 0, 0, .05);
+    }
+
+    &.selected {
+      background: rgba(0, 0, 0, .1);
+    }
+  }
+
+  .close-button {
+    @extend %vanilla-button;
+
+    span {
+      @include transition(transform $base-transition-duration/2 ease-in-out);
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+    }
+
+    left: 0;
+    position: absolute;
+    top: 50%;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &.open {
+    @include flex-basis(0);
+    .close-button span {
+      @include transform(rotate(-90deg));
+    }
+  }
+
+  &.closed {
+    @include flex-basis(300px);
+    .close-button span {
+      @include transform(rotate(90deg));
+    }
+  }
+}

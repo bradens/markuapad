@@ -92,3 +92,10 @@ $shadow-spread: -$shadow-blur / 2;
 %base-transition {
   @include transition(all, $base-transition-duration, ease-in-out);
 }
+
+%vanilla-button {
+  @include appearance(none);
+  background: initial;
+  border-radius: initial;
+  color: initial;
+}

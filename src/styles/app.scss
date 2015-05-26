@@ -17,8 +17,13 @@
 @import "layout";
 
 @import "toolbar";
-
 @import "editor";
+@import "file_browser";
+
+.markuapad .main-view {
+  @include display(flex);
+  @include flex-flow(row nowrap);
+}
 
 body {
   background: $background;

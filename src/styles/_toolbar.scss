@@ -1,4 +1,5 @@
 .markuapad .toolbar {
+  @include flex(1);
   margin: 20px 0;
   li {
     display: inline-block;
@@ -6,10 +7,11 @@
   }
 
   a {
-    @include transition(all $base-transition-duration ease-in-out);
+    @include transition(all $base-transition-duration/2 ease-in-out);
 
     border: thin solid rgba(0, 0, 0, .0);
     border-radius: 18px;
+    cursor: pointer;
     padding: 8px 20px;
 
     &:hover {

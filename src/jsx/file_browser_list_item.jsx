@@ -4,7 +4,7 @@ class FileBrowserListItem extends React.Component {
   render() {
     return (
       <li className="files-list-item">
-        { this.props.file.name }
+        <a>{ this.props.file.name }</a>
       </li>
     );
   }
