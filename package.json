@@ -1,0 +1,52 @@
+{
+  "name": "markuapad",
+  "version": "1.0.0",
+  "description": "A web app to write markua documents.",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "node node_modules/karma/bin/karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruboss/markuapad"
+  },
+  "keywords": [
+    "markua",
+    "javascript",
+    "markdown",
+    "html",
+    "web"
+  ],
+  "author": "Braden Simpson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/markuadoc/markuapad/issues"
+  },
+  "homepage": "https://github.com/markuadoc/markuapad",
+  "dependencies": {
+    "babel": "^5.1.11",
+    "babel-core": "^5.1.10",
+    "babel-loader": "^5.0.0",
+    "css-loader": "^0.9.1",
+    "del": "^1.2.0",
+    "extract-text-webpack-plugin": "^0.3.8",
+    "file-loader": "^0.8.1",
+    "jsx-loader": "^0.12.2",
+    "react": "^0.13.1",
+    "react-hot-loader": "^1.2.5",
+    "run-sequence": "^1.0.2",
+    "sass-loader": "^1.0.2",
+    "style-loader": "^0.8.2",
+    "underscore": "^1.8.3",
+    "webpack": "^1.8.8",
+    "webpack-dev-server": "^1.8.2"
+  },
+  "devDependencies": {
+    "karma": "^0.12.32",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-mocha": "^0.1.10",
+    "karma-webpack": "^1.5.0",
+    "mocha": "^2.1.0",
+    "should": "^5.2.0"
+  }
+}
