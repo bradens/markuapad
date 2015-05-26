@@ -1,11 +1,13 @@
 import React from "react";
 
-let Main = React.createClass({
+class Editor extends React.Component {
   render() {
     return (
-      <div>Test</div>
+      <section className="editor container">
+        Here is the editor
+      </section>
     );
   }
-});
+}
 
-export default Main;
+export default Editor;

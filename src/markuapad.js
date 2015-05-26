@@ -1,6 +1,7 @@
+// Get the stylesheet
 require("./styles/app.scss");
 
-import Editor from "./jsx/editor";
+import Main from "./jsx/main";
 import React from "react";
 
 class Markuapad {
@@ -8,8 +9,8 @@ class Markuapad {
     console.log("Creating a new instance of the markuapad");
   }
 
-  create(elementId) {
-    React.render(React.createFactory(Editor)(), document.getElementById(elementId));
+  create(elementId, options = {}) {
+    React.render(React.createFactory(Main)(), document.getElementById(elementId));
   }
 }
 

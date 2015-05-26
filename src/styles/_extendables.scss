@@ -1,0 +1,94 @@
+// TODO: move these intro individual files once they get to large.. e.g. stylesheets/common/extendables/lists.scss
+// use this as the base file and include the extendables files from an extendables directory
+
+// TODO: these shadows need some serious work.. consider using linear-gradient instead of box-shadow because we will have more control. Or at least ONLY use box shadow or ONLY use inset shadow... attching them to pseudo elements as linear gradients might be good
+
+// Shadows
+$shadow-color: rgba(0, 0, 0, 0.4);
+$shadow-blur: 40px;
+$shadow-spread: -$shadow-blur / 2;
+
+// Inset
+%inset-shadow-top     { box-shadow: inset 0  7px $shadow-blur $shadow-spread $shadow-color; }
+%inset-shadow-bottom  { box-shadow: inset 0 -7px $shadow-blur $shadow-spread $shadow-color; }
+
+%inset-shadow-top-bottom {
+  box-shadow: inset 0 7px $shadow-blur $shadow-spread $shadow-color,
+              inset 0 -7px $shadow-blur $shadow-spread $shadow-color;
+}
+
+// Box shadows
+%box-shadow-top     { box-shadow: 0 -7px $shadow-blur $shadow-spread $shadow-color; }
+%box-shadow-bottom  { box-shadow: 0  7px $shadow-blur $shadow-spread $shadow-color; }
+
+%box-shadow-top-bottom {
+  box-shadow: 0  7px $shadow-blur $shadow-spread $shadow-color,
+              0 -7px $shadow-blur $shadow-spread $shadow-color;
+}
+
+// Box and Inset
+%box-shadow-bottom-inset-top {
+  box-shadow: inset 0 7px $shadow-blur $shadow-spread $shadow-color,
+                    0 7px $shadow-blur $shadow-spread $shadow-color;
+}
+
+%book-drop-shadow {
+  position: relative;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, .33);
+}
+
+%box-shadow {
+  position: relative;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.10);
+}
+%radial-drop-shadow {
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  &:after{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    bottom: 0px;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    height: 50%;
+    border-radius: 100%;
+  }
+}
+
+// Image replacement mixin http://nicolasgallagher.com/another-css-image-replacement-technique/
+%replace-text {
+  border: 0;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+}
+
+// Layout
+%absolute-center {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+
+// Lists
+%horizontal-list {
+  text-align: center;
+  li {
+    text-align: inherit;
+    display: inline-block;
+    list-style-type: none;
+    margin-right: 1em;
+    &:last-child { margin-right: 0; }
+  }
+}
+
+// Transitions and animations
+%base-transition {
+  @include transition(all, $base-transition-duration, ease-in-out);
+}

@@ -1,0 +1,6 @@
+.editor {
+  @extend %box-shadow;
+  background: $editor-background;
+  @include pad($editor-padding);
+  min-height: $editor-min-height;
+}

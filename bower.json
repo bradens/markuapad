@@ -1,0 +1,30 @@
+{
+  "name": "markuapad",
+  "version": "0.0.0",
+  "authors": [
+    "Braden Simpson <braden@leanpub.com>"
+  ],
+  "description": "A web app to write markua documents.",
+  "main": "build/index.js",
+  "keywords": [
+    "es6",
+    "markua",
+    "writing",
+    "documents"
+  ],
+  "license": "MIT",
+  "homepage": "https://leanpub.com/markua",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bourbon": "~4.2.3",
+    "bitters": "~1.0.0",
+    "jquery": "~2.1.4",
+    "neat": "~1.7.2"
+  }
+}
