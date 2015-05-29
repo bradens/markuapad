@@ -13,7 +13,7 @@ var commonLoaders = [
 module.exports = {
     name: 'browser',
     entry: {
-      app: './src/markuapad.js',
+      app: ['./src/markuapad.js'],
       web: './src/web.js',
       index: './src/index.js'
     },
