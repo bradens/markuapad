@@ -1,13 +1,18 @@
-.container {
-  @include outer-container;
-  @include pad(0 1em);
-}
-
-.large-container {
-  @include outer-container;
-  @include pad;
-  max-width: em(1280); // Max width from design
-  @include media($large-screen) {
+.markuapad {
+  &.container,
+  .container {
+    @include outer-container;
     @include pad(0 1em);
   }
+
+  &.large-container,
+  .large-container {
+    @include outer-container;
+    @include pad;
+    max-width: em(1280); // Max width from design
+    @include media($large-screen) {
+      @include pad(0 1em);
+    }
+  }
 }
+

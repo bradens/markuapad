@@ -34,15 +34,16 @@
     "extract-text-webpack-plugin": "^0.3.8",
     "file-loader": "^0.8.1",
     "jsx-loader": "^0.12.2",
+    "markua-js": "git+ssh://git@github.com:markuadoc/markua-js",
     "react": "^0.13.1",
     "react-hot-loader": "^1.2.5",
     "run-sequence": "^1.0.2",
     "sass-loader": "^1.0.2",
     "style-loader": "^0.8.2",
     "underscore": "^1.8.3",
+    "underscore.string": "^3.0.3",
     "webpack": "^1.8.8",
-    "webpack-dev-server": "^1.8.2",
-    "markua-js": "git+ssh://git@github.com:markuadoc/markua-js"
+    "webpack-dev-server": "^1.8.2"
   },
   "devDependencies": {
     "karma": "^0.12.32",

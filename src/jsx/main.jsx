@@ -46,7 +46,7 @@ class Main extends React.Component {
   render() {
     return (
       <section className="markuapad large-container">
-        <Toolbar onGeneratePreview={this.onGeneratePreview} />
+        <Toolbar bookTitle={this.props.bookTitle} onGeneratePreview={this.onGeneratePreview} />
         <section className="main-view">
           <FileBrowser onChangeFile={this.onChangeFile} currentFile={this.state.currentFile} projectRoot={this.props.projectRoot }/>
           <Editor currentFile={this.state.currentFile} />

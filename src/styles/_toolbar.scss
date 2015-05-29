@@ -20,7 +20,15 @@
   @include display(flex);
   margin: 20px 0;
 
+  .book-title {
+    @include flex(1);
+    @include order(1);
+  }
+
   .menus {
+    // For now we don't need this
+    display: none;
+
     @include flex(1);
     @include order(1);
     z-index: 1;

@@ -9,11 +9,14 @@
   background: $files-background;
   min-height: $files-min-height;
 
+  // The little "Files" header
   .title {
     color: #aaa;
     font-variant: small-caps;
+    font-size: 1em; 
   }
 
+  // The new file creation button
   .new-file {
     @include transition(all $base-transition-duration/2 ease-in-out);
     border: thin solid rgba(0, 0, 0, .1);
@@ -38,6 +41,7 @@
     }
   }
 
+  // The new file creation form
   .file-name {
     @include display(flex);
     button {
@@ -48,6 +52,7 @@
     }
   }
 
+  // A file list item
   .files-list-item {
     position: relative;
 
@@ -83,37 +88,41 @@
     }
   }
 
+  // Close the file browser button
   .close-button {
     @extend %vanilla-button;
 
-    span {
-      @include transition(transform $base-transition-duration/2 ease-in-out);
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");
-      background-position: center;
-      background-repeat: no-repeat;
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-    }
-
     left: 0;
+    padding: 0;
     position: absolute;
     top: 50%;
-    padding: 0;
+
+    span {
+      @include transition(transform $base-transition-duration/2 ease-in-out);
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==');
+      background-position: center;
+      background-repeat: no-repeat;
+      display: inline-block;
+      height: 16px;
+      width: 16px;
+    }
 
     &:focus {
       outline: none;
     }
   }
 
+  // Open state
   &.open {
     @include flex-basis(300px);
     .new-file { display: block; }
+
     .close-button span {
       @include transform(rotate(-90deg));
     }
   }
 
+  // Closed state
   &.closed {
     @include flex-basis(0);
     .new-file { display: none; }

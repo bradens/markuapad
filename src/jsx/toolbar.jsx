@@ -15,6 +15,7 @@ class Toolbar extends React.Component {
     // <li><a onClick={this.onClick}>Help</a></li>
     return (
       <nav className="toolbar">
+        <h3 className="book-title">{ this.props.bookTitle}</h3>
         <ul className="menus">
           <li className="dropdown">
             <a>File</a>

@@ -11,6 +11,7 @@ class FileBrowser extends React.Component {
       closed: false
     };
 
+    // Autobind
     this.toggleClose = this.toggleClose.bind(this);
     this.newFile = this.newFile.bind(this);
     this.createFile = this.createFile.bind(this);
@@ -22,6 +23,7 @@ class FileBrowser extends React.Component {
     this.listFiles()
   }
 
+  // List what files we have
   listFiles() {
     FileAccessor.list((error, filenames) => {
       if (error)
@@ -35,6 +37,7 @@ class FileBrowser extends React.Component {
     this.setState({ closed: !this.state.closed });
   }
 
+  // Actually create a new file
   createFile(e) {
     let fileNode = this.refs.filename.getDOMNode()
     FileAccessor.new(fileNode.value, () => {
@@ -47,16 +50,19 @@ class FileBrowser extends React.Component {
     e.preventDefault();
   }
 
+  // Open the new file form
   newFile(e) {
     this.setState({ creatingFile: !this.state.creatingFile })
   }
 
+  // Delete a file
   onDeleteFile(file) {
     FileAccessor.delete(file, this.listFiles);
   }
 
   renderFileCreator() {
     if (!this.state.creatingFile) return;
+
     return (
       <form onSubmit={this.createFile} className="file-name">
         <input type="text" ref="filename" placeholder="Type a filename..."></input>
