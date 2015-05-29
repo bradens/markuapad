@@ -23,6 +23,7 @@
   .book-title {
     @include flex(1);
     @include order(1);
+    margin: 0;
   }
 
   .menus {

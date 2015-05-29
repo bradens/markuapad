@@ -13,7 +13,7 @@
   .title {
     color: #aaa;
     font-variant: small-caps;
-    font-size: 1em; 
+    font-size: 1em;
   }
 
   // The new file creation button
@@ -44,6 +44,7 @@
   // The new file creation form
   .file-name {
     @include display(flex);
+    margin: 0; 
     button {
       font-size: .75em;
       height: 36px;
