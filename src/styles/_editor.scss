@@ -1,9 +1,14 @@
-.editor {
+.markuapad .editor {
   @extend %box-shadow;
-//  @include pad($editor-padding);
   @include flex(1);
   background: $editor-background;
   min-height: $editor-min-height;
+
+  // Advanced font feature settings break the ace editor
+  font-feature-settings: initial;
+  -webkit-font-feature-settings: initial;
+  -ms-font-feature-settings: initial;
+  -moz-font-feature-settings: initial;
 
   // Overrides from ace editor
   &.emacs-mode .ace_cursor {

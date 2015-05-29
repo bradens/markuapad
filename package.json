@@ -2,7 +2,7 @@
   "name": "markuapad",
   "version": "1.0.0",
   "description": "A web app to write markua documents.",
-  "main": "build/index.js",
+  "main": "build/markuapad.js",
   "scripts": {
     "test": "node node_modules/karma/bin/karma start karma.conf.js"
   },
@@ -41,7 +41,8 @@
     "style-loader": "^0.8.2",
     "underscore": "^1.8.3",
     "webpack": "^1.8.8",
-    "webpack-dev-server": "^1.8.2"
+    "webpack-dev-server": "^1.8.2",
+    "markua-js": "git+ssh://git@github.com:markuadoc/markua-js"
   },
   "devDependencies": {
     "karma": "^0.12.32",

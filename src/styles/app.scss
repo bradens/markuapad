@@ -10,6 +10,12 @@
 @import "grid-settings";
 @import "../../bower_components/neat/app/assets/stylesheets/neat";
 
+// Fonts
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Open+Sans);
+
+// Font awesome
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css);
+
 // Our extends
 @import "extendables";
 
@@ -19,6 +25,7 @@
 @import "toolbar";
 @import "editor";
 @import "file_browser";
+@import "preview";
 
 .markuapad .main-view {
   @include display(flex);
@@ -27,4 +34,5 @@
 
 body {
   background: $background;
+  font-family: 'Open Sans', sans-serif;
 }

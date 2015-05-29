@@ -14,7 +14,8 @@ module.exports = {
     name: 'browser',
     entry: {
       app: './src/markuapad.js',
-      web: './src/web.js'
+      web: './src/web.js',
+      index: './src/index.js'
     },
     output: {
       path: "./build",

@@ -9,19 +9,77 @@
   background: $files-background;
   min-height: $files-min-height;
 
-  .files-list-item a {
-    @include border-left-radius(3px);
-    @include transition(background $base-transition-duration/2 ease-in-out);
-    cursor: pointer;
-    display: block;
-    padding: .2em .5em;
+  .title {
+    color: #aaa;
+    font-variant: small-caps;
+  }
 
-    &:hover {
-      background: rgba(0, 0, 0, .05);
+  .new-file {
+    @include transition(all $base-transition-duration/2 ease-in-out);
+    border: thin solid rgba(0, 0, 0, .1);
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 8px 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    i {
+      font-size: .75em;
     }
 
-    &.selected {
+    &:hover,
+    &:active {
+      border-color: rgba(0, 0, 0, .4);
+    }
+
+    &.active {
+      @include transform(rotate(45deg));
+    }
+  }
+
+  .file-name {
+    @include display(flex);
+    button {
+      font-size: .75em;
+      height: 36px;
+      margin: 0 5px;
+      width: 80px;
+    }
+  }
+
+  .files-list-item {
+    position: relative;
+
+    a {
+      @include border-left-radius(3px);
+      @include transition(background $base-transition-duration/2 ease-in-out);
+      cursor: pointer;
+      display: block;
+      font-size: .9em;
+      padding: .2em .5em;
+    }
+
+    &.current a {
       background: rgba(0, 0, 0, .1);
+    }
+
+    // Hover state
+    &:hover {
+      a { background: rgba(0, 0, 0, .05); }
+      button {
+        display: block;
+      }
+    }
+
+    // The delete button
+    > button {
+      @extend %vanilla-button;
+      padding: 5px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: none;
     }
   }
 
@@ -49,16 +107,19 @@
   }
 
   &.open {
-    @include flex-basis(0);
+    @include flex-basis(300px);
+    .new-file { display: block; }
     .close-button span {
       @include transform(rotate(-90deg));
     }
   }
 
   &.closed {
-    @include flex-basis(300px);
+    @include flex-basis(0);
+    .new-file { display: none; }
     .close-button span {
       @include transform(rotate(90deg));
     }
   }
 }
+

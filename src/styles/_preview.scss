@@ -1,0 +1,43 @@
+.markuapad .preview {
+  @include transition(top $base-transition-duration/2 ease-in-out);
+
+  background: $white;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+
+  // Preview states
+  &.closed {
+    top: 100%;
+    > * { display: none; }
+  }
+
+  &.previewing,
+  &.done {
+    top: 0;
+  }
+
+  > header {
+    position: relative;
+  }
+
+  // The close button
+  .close {
+    @extend %vanilla-button;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+
+  // main content
+  .content {
+    margin-top: 4em;
+    &, h1, h2, h3, h4, h5, h6 {
+      font-family: "Roboto Slab", serif;
+    }
+  }
+
+}

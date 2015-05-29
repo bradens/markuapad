@@ -5,7 +5,7 @@
     "Braden Simpson <braden@leanpub.com>"
   ],
   "description": "A web app to write markua documents.",
-  "main": "build/index.js",
+  "main": "build/markuapad.js",
   "keywords": [
     "es6",
     "markua",

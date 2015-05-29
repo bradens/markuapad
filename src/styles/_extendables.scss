@@ -98,4 +98,8 @@ $shadow-spread: -$shadow-blur / 2;
   background: initial;
   border-radius: initial;
   color: initial;
+
+  &:focus {
+    outline: none;
+  }
 }

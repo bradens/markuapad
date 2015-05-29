@@ -1,22 +1,78 @@
-.markuapad .toolbar {
-  @include flex(1);
-  margin: 20px 0;
-  li {
-    display: inline-block;
-    margin: 0 5px;
-  }
-
-  a {
+%nav-button {
+  display: inline-block;
+  margin: 0 5px;
+  position: relative;
+  > a {
     @include transition(all $base-transition-duration/2 ease-in-out);
-
-    border: thin solid rgba(0, 0, 0, .0);
+    border: thin solid rgba(0, 0, 0, .05);
     border-radius: 18px;
     cursor: pointer;
     padding: 8px 20px;
+    color: #555;
+  }
+  &:hover > a {
+    background: #fff;
+    border-color: rgba(0, 0, 0, .2);
+  }
+}
 
-    &:hover {
-      background: #fff;
-      border-color: rgba(0, 0, 0, .1);
+.markuapad .toolbar {
+  @include display(flex);
+  margin: 20px 0;
+
+  .menus {
+    @include flex(1);
+    @include order(1);
+    z-index: 1;
+
+    .dropdown {
+      @extend %nav-button;
+
+      .dropdown-menu {
+        @include transition(all $base-transition-duration/2 ease-in-out);
+        height: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        overflow: hidden;
+        background: #fff;
+        margin-top: 0;
+        min-width: 150px;
+        z-index: -1;
+        border-color: rgba(0, 0, 0, 0.1);
+        border-radius: 18px;
+
+        a {
+          padding: 8px 20px;
+          color: #555;
+          display: block;
+          white-space: nowrap;
+        }
+      }
+
+      // Hover state
+      &:hover {
+        > a {
+          @include border-bottom-radius(0);
+          border-bottom: none;
+        }
+
+        .dropdown-menu {
+          border-radius: 18px;
+          height: auto;
+          min-height: 100%;
+          border: thin solid rgba(0, 0, 0, .2);
+          border-top-left-radius: 0;
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+
+  .actions {
+    @include order(2);
+    li {
+      @extend %nav-button;
     }
   }
 }
