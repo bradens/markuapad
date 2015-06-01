@@ -5,6 +5,7 @@ import Toolbar from "./toolbar";
 import FileBrowser from "./file_browser";
 import Preview from "./preview";
 import LivePreview from "./live_preview";
+import FileAccessor from "../file_accessor";
 
 class Main extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Main extends React.Component {
     this.state = {
       currentFile: `book.txt`,
       previewState: 'closed',
-      inLiveMode: false,
+      inLiveMode: true,
       previewHtml: ""
     }
 
@@ -25,12 +26,40 @@ class Main extends React.Component {
     this.toggleLiveMode = this.toggleLiveMode.bind(this);
     this.onBookContentChanged = this.onBookContentChanged.bind(this);
     this.getWorkspaceClass = this.getWorkspaceClass.bind(this);
+    this.onFileDeleted = this.onFileDeleted.bind(this);
+    this.onFileAdded = this.onFileAdded.bind(this);
+
+    // File access hooks
+    FileAccessor.onDelete(this.onFileDeleted);
+    FileAccessor.onAdd(this.onFileAdded);
+  }
+
+  // Lifecycle methods
+  componentDidMount() {
+    // Trigger a preview right away -- since we start in live mode
+    this.onGeneratePreview();
+  }
+
+  // File event operations
+  onFileAdded(filename) {
+    this.setState({ currentFile: filename });
+  }
+
+  onFileDeleted(filename) {
+    // Re-preview
+    this.onGeneratePreview();
+
+    // Select another file
+    FileAccessor.list((error, files) => {
+      this.setState({ currentFile: files[0] });
+    });
   }
 
   onChangeFile(filename) {
     this.setState({ currentFile: filename });
   }
 
+  // Preview based methods
   onPreviewReady(errors, html) {
     // If someone has already stopped the preview then just bail
     if (this.state.previewState === "closed")
@@ -51,7 +80,7 @@ class Main extends React.Component {
 
   toggleLiveMode() {
     // Clear the preview state here as well, so we don't accidentally open a preview
-    this.setState({ inLiveMode: !this.state.inLiveMode, previewState: 'live' }, () => {
+    this.setState({ inLiveMode: !this.state.inLiveMode, previewState: "closed" }, () => {
       // If we transition into live mode, then kick off an initial preview;
       if (this.state.inLiveMode)
         this.onGeneratePreview();
@@ -86,10 +115,10 @@ class Main extends React.Component {
               inLiveMode={this.state.inLiveMode}
               currentFile={this.state.currentFile}
             />
-            { this.state.inLiveMode ? <LivePreview html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
+            { this.state.inLiveMode ? <LivePreview key='live-mode' html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
           </section>
         </section>
-        <Preview inLiveMode={this.state.inLiveMode} onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} />
+        { this.state.inLiveMode ? <span /> : <Preview key='preview' onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> }
       </section>
     );
   }

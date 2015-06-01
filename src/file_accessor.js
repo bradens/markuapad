@@ -35,6 +35,15 @@ class FileAccessor {
   setup(fileAccessor, projectRoot) {
     this.fileAccessorDelegate = new fileAccessor(projectRoot);
   }
+
+  // Events
+  onDelete() {
+    this.fileAccessorDelegate.onDelete(...arguments);
+  }
+
+  onAdd() {
+    this.fileAccessorDelegate.onAdd(...arguments);
+  }
 }
 
 export default new FileAccessor();

@@ -2,8 +2,6 @@ import React from "react";
 
 class Preview extends React.Component {
   render() {
-    if (this.props.inLiveMode) return null
-
     let clazz = `preview ${this.props.previewState}`
 
     return (

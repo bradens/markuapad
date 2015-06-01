@@ -12,7 +12,7 @@ class Editor extends React.Component {
     this.onCurrentFileLoaded = this.onCurrentFileLoaded.bind(this);
 
     // Make the editor changed function not spammy
-    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 200);
+    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 50);
   }
 
   // Setup all the editor options when we mount.
@@ -55,9 +55,7 @@ class Editor extends React.Component {
       return
     else {
       this.setState({ currentFileValue: value })
-      FileAccessor.save(this.props.currentFile, value, () => {
-        console.log("Saved file");
-      });
+      FileAccessor.save(this.props.currentFile, value);
 
       // Notify the parent
       this.props.onBookContentChanged();
@@ -69,6 +67,10 @@ class Editor extends React.Component {
     if (error)
       console.error(error)
     else {
+      // Focus the editor
+      this.editor.focus();
+
+      // Set the value of it
       this.setState({ currentFileValue: contents }, () => this.editor.setValue(contents, -1));
     }
   }

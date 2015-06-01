@@ -2,7 +2,6 @@
   .editor {
     @extend %box-shadow;
     @include flex(1);
-    height: 100%;
 
     // Advanced font feature settings break the ace editor
     font-feature-settings: initial;

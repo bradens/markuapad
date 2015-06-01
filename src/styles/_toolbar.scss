@@ -30,6 +30,7 @@
 .markuapad .toolbar {
   @include display(flex);
   margin: 20px 0;
+  padding: 0 10px;
 
   .book-title {
     @include flex(1);
