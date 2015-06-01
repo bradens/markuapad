@@ -11,6 +11,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
 
+    // Setup some initial state
     this.state = {
       currentFile: `book.txt`,
       previewState: 'closed',
@@ -129,6 +130,6 @@ Main.propTypes = {
   bookTitle: React.PropTypes.string.isRequired,
   projectRoot: React.PropTypes.string.isRequired,
   options: React.PropTypes.object.isRequired
-}
+};
 
 export default Main;
