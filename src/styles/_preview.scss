@@ -32,9 +32,17 @@
     right: 0;
   }
 
-  // main content
   .content {
     margin-top: 4em;
+  }
+}
+
+
+// Shared content styles
+.markuapad .live-preview,
+.markuapad .preview {
+  // main content
+  .content {
 
     ul { @extend %default-ul; }
 

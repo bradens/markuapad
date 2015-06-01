@@ -12,7 +12,9 @@ class Main extends React.Component {
 
     this.state = {
       currentFile: `book.txt`,
-      previewState: 'closed'
+      previewState: 'closed',
+      inLiveMode: false,
+      previewHtml: ""
     }
 
     // Autobind
@@ -49,7 +51,7 @@ class Main extends React.Component {
 
   toggleLiveMode() {
     // Clear the preview state here as well, so we don't accidentally open a preview
-    this.setState({ inLiveMode: !this.state.inLiveMode, previewState: null }, () => {
+    this.setState({ inLiveMode: !this.state.inLiveMode, previewState: 'live' }, () => {
       // If we transition into live mode, then kick off an initial preview;
       if (this.state.inLiveMode)
         this.onGeneratePreview();

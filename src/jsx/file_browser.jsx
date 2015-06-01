@@ -82,7 +82,7 @@ class FileBrowser extends React.Component {
         </div>
         { this.renderFileCreator() }
         <ul className="files-list">
-          { _.map(this.state.files, (file) => { return <FileBrowserListItem onDeleteFile={this.onDeleteFile} onChangeFile={this.props.onChangeFile} isCurrent={this.props.currentFile === file} file={file} /> }) }
+          { _.map(this.state.files, (file, i) => { return <FileBrowserListItem key={i} onDeleteFile={this.onDeleteFile} onChangeFile={this.props.onChangeFile} isCurrent={this.props.currentFile === file} file={file} /> }) }
         </ul>
         <button className="close-button" onClick={this.toggleClose}><span></span></button>
       </section>

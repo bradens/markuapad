@@ -12,7 +12,7 @@ class Editor extends React.Component {
     this.onCurrentFileLoaded = this.onCurrentFileLoaded.bind(this);
 
     // Make the editor changed function not spammy
-    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 500);
+    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 200);
   }
 
   // Setup all the editor options when we mount.
