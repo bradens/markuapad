@@ -112,6 +112,14 @@ ol {
   list-style-type: none;
   margin: 0;
   padding: 0; }
+  .markuapad .preview .content ul {
+    list-style-type: disc;
+    margin-bottom: 0.75em;
+    padding-left: 1.5em; }
+  .markuapad .preview .content ol {
+    list-style-type: decimal;
+    margin-bottom: 0.75em;
+    padding-left: 1.5em; }
 
 dl {
   margin-bottom: 0.75em; }
@@ -219,28 +227,33 @@ html {
   .markuapad .file-browser .files-list-item > button:focus, .markuapad .file-browser .close-button:focus, .markuapad .preview .close:focus {
     outline: none; }
 
-.container {
+.markuapad.container,
+.markuapad .container {
   max-width: 64em;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1em; }
-  .container::after {
+  .markuapad.container::after,
+  .markuapad .container::after {
     clear: both;
     content: "";
     display: table; }
 
-.large-container {
+.markuapad.large-container,
+.markuapad .large-container {
   max-width: 64em;
   margin-left: auto;
   margin-right: auto;
   padding: 2.35765%;
   max-width: 80em; }
-  .large-container::after {
+  .markuapad.large-container::after,
+  .markuapad .large-container::after {
     clear: both;
     content: "";
     display: table; }
   @media screen and (min-width: 53.75em) {
-    .large-container {
+    .markuapad.large-container,
+    .markuapad .large-container {
       padding: 0 1em; } }
 
 .markuapad .toolbar .menus .dropdown, .markuapad .toolbar .actions li {
@@ -269,7 +282,24 @@ html {
   display: -ms-flexbox;
   display: flex;
   margin: 20px 0; }
+  .markuapad .toolbar .book-title {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    box-ordinal-group: 1;
+    -webkit-order: 1;
+    -moz-order: 1;
+    order: 1;
+    -ms-flex-order: 1;
+    margin: 0; }
   .markuapad .toolbar .menus {
+    display: none;
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     box-flex: 1;
@@ -362,7 +392,8 @@ html {
   min-height: 90%; }
   .markuapad .file-browser .title {
     color: #aaa;
-    font-variant: small-caps; }
+    font-variant: small-caps;
+    font-size: 1em; }
   .markuapad .file-browser .new-file {
     -webkit-transition: all 0.125s ease-in-out;
     -moz-transition: all 0.125s ease-in-out;
@@ -392,7 +423,8 @@ html {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    margin: 0; }
     .markuapad .file-browser .file-name button {
       font-size: .75em;
       height: 36px;
@@ -424,9 +456,9 @@ html {
       display: none; }
   .markuapad .file-browser .close-button {
     left: 0;
+    padding: 0;
     position: absolute;
-    top: 50%;
-    padding: 0; }
+    top: 50%; }
     .markuapad .file-browser .close-button span {
       -webkit-transition: -webkit-transform 0.125s ease-in-out;
       -moz-transition: -moz-transform 0.125s ease-in-out;
@@ -434,9 +466,9 @@ html {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");
       background-position: center;
       background-repeat: no-repeat;
-      width: 16px;
+      display: inline-block;
       height: 16px;
-      display: inline-block; }
+      width: 16px; }
     .markuapad .file-browser .close-button:focus {
       outline: none; }
   .markuapad .file-browser.open {
@@ -492,7 +524,13 @@ html {
     top: 5px; }
   .markuapad .preview .content {
     margin-top: 4em; }
-    .markuapad .preview .content, .markuapad .preview .content h1, .markuapad .preview .content h2, .markuapad .preview .content h3, .markuapad .preview .content h4, .markuapad .preview .content h5, .markuapad .preview .content h6 {
+    .markuapad .preview .content,
+    .markuapad .preview .content h1,
+    .markuapad .preview .content h2,
+    .markuapad .preview .content h3,
+    .markuapad .preview .content h4,
+    .markuapad .preview .content h5,
+    .markuapad .preview .content h6 {
       font-family: "Roboto Slab", serif; }
 
 .markuapad .main-view {
@@ -506,6 +544,24 @@ html {
   -webkit-flex-flow: row nowrap;
   -moz-flex-flow: row nowrap;
   flex-flow: row nowrap; }
+
+h1 {
+  font-size: 2.25em; }
+
+h2 {
+  font-size: 2em; }
+
+h3 {
+  font-size: 1.75em; }
+
+h4 {
+  font-size: 1.5em; }
+
+h5 {
+  font-size: 1.25em; }
+
+h6 {
+  font-size: 1em; }
 
 body {
   background: #f5f5f5;

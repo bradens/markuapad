@@ -2,6 +2,12 @@
   display: inline-block;
   margin: 0 5px;
   position: relative;
+
+  &:hover > a {
+    background: #fff;
+    border-color: rgba(0, 0, 0, .2);
+  }
+
   > a {
     @include transition(all $base-transition-duration/2 ease-in-out);
     border: thin solid rgba(0, 0, 0, .05);
@@ -9,10 +15,15 @@
     cursor: pointer;
     padding: 8px 20px;
     color: #555;
-  }
-  &:hover > a {
-    background: #fff;
-    border-color: rgba(0, 0, 0, .2);
+
+    &.active {
+      background: $blue;
+      color: white;
+    }
+
+    &.disabled {
+      color: #aaa;
+    }
   }
 }
 

@@ -55,19 +55,23 @@
 	  var value = undefined;
 	  if (value = localStorage.getItem(key)) return value;else return defaultValue;
 	};
-
 	var setCached = function setCached(key, value) {
 	  localStorage.setItem(key, value);
 	  return value;
 	};
 
-	// Create our client side file system for markuapad to work with.
+	// Create our client side files for markuapad to work with.
 	if (!getCached("markuapad_files")) {
-	  setCached("example/book.txt", "chapter1.txt\nchapter2.txt");
-	  setCached("example/manuscript/chapter1.txt", "#Chapter 1\n\nHere is the first chapter");
-	  setCached("example/manuscript/chapter2.txt", "#Chapter 2\n\nHere is the second chapter");
-	  setCached("markuapad_files", ["example/book.txt", "example/manuscript/chapter1.txt", "example/manuscript/chapter2.txt"]);
+	  setCached("my-first-markuapad-book/book.txt", "chapter1.txt\nchapter2.txt");
+	  setCached("my-first-markuapad-book/chapter1.txt", "#Chapter 1\n\nHere is the first chapter");
+	  setCached("my-first-markuapad-book/chapter2.txt", "#Chapter 2\n\nHere is the second chapter");
+	  setCached("markuapad_files", ["my-first-markuapad-book/book.txt", "my-first-markuapad-book/chapter1.txt", "my-first-markuapad-book/chapter2.txt"]);
 	}
+
+	// This is the file accessor that you must implement before creating a new markuapad instance.
+	// All I/O operations go through this.
+	// This implementation is for use in the browser, and is only for demo purposes, so we use
+	// localstorage as the data store.
 
 	var ExampleFileAccessor = (function () {
 	  function ExampleFileAccessor(projectRoot) {
@@ -89,9 +93,10 @@
 	  }, {
 	    key: "list",
 	    value: function list(cb) {
-	      cb(null, getCached("markuapad_files").split(",").map(function (k) {
+	      var files = getCached("markuapad_files");
+	      cb(null, files ? files.split(",").map(function (k) {
 	        return k.substr(k.indexOf("/") + 1);
-	      }));
+	      }) : []);
 	    }
 	  }, {
 	    key: "save",

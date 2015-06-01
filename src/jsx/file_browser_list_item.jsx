@@ -32,6 +32,7 @@ class FileBrowserListItem extends React.Component {
 
 FileBrowserListItem.propTypes = {
   file: React.PropTypes.string.isRequired,
+  isCurrent: React.PropTypes.bool.isRequired,
   onDeleteFile: React.PropTypes.func.isRequired,
   onChangeFile: React.PropTypes.func.isRequired
 }

@@ -103,3 +103,13 @@ $shadow-spread: -$shadow-blur / 2;
     outline: none;
   }
 }
+
+%close-button {
+  @extend %vanilla-button;
+
+  position: absolute;
+  right: 5px;
+  top: 5px;
+
+  padding: 5px;
+}

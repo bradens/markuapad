@@ -1,0 +1,30 @@
+.workspace {
+  @include display(flex);
+  @include flex(1);
+  @include flex-flow(row nowrap);
+  height: 90%;
+
+  &.live {
+    left: 10px;
+    position: absolute;
+    right: 10px;
+
+    .editor {
+      max-width: 64em;
+    }
+
+    .live-preview {
+      @extend %box-shadow;
+      @include flex(1);
+      background: $editor-background;
+      max-height: 100%;
+      overflow: auto;
+      padding: 2em 1em;
+
+      // Make the preview contents not center, looks dumb at large resolutions
+      .content {
+        margin-left: initial;
+      }
+    }
+  }
+}

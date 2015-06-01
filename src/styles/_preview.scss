@@ -28,8 +28,8 @@
   .close {
     @extend %vanilla-button;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    top: 10px;
+    right: 0;
   }
 
   // main content

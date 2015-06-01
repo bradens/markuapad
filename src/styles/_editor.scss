@@ -1,20 +1,21 @@
-.markuapad .editor {
-  @extend %box-shadow;
-  @include flex(1);
-  background: $editor-background;
-  min-height: $editor-min-height;
+.markuapad {
+  .editor {
+    @extend %box-shadow;
+    @include flex(1);
+    height: 100%;
 
-  // Advanced font feature settings break the ace editor
-  font-feature-settings: initial;
-  -webkit-font-feature-settings: initial;
-  -ms-font-feature-settings: initial;
-  -moz-font-feature-settings: initial;
+    // Advanced font feature settings break the ace editor
+    font-feature-settings: initial;
+    -webkit-font-feature-settings: initial;
+    -ms-font-feature-settings: initial;
+    -moz-font-feature-settings: initial;
 
-  // Overrides from ace editor
-  &.emacs-mode .ace_cursor {
-    background-color: #222;
-    border: none !important;
-    border-left: 1px solid #222 !important;
-    width: 2px !important;
+    // Overrides from ace editor
+    &.emacs-mode .ace_cursor {
+      background-color: #222;
+      border: none !important;
+      border-left: 1px solid #222 !important;
+      width: 2px !important;
+    }
   }
 }

@@ -90,4 +90,10 @@ class FileBrowser extends React.Component {
   }
 }
 
+FileBrowser.propTypes = {
+  projectRoot: React.PropTypes.string.isRequired,
+  onChangeFile: React.PropTypes.func.isRequired,
+  currentFile: React.PropTypes.string.isRequired
+};
+
 export default FileBrowser;

@@ -29,6 +29,7 @@ class Editor extends React.Component {
     this.editor.setFontSize(14);
     this.editor.$blockScrolling = Infinity;
     this.editor.session.setUseWrapMode(true);
+    this.editor.setHighlightActiveLine(false);
 
     // When the editor changes, alert us
     this.editor.on("change", this.onEditorChanged)
@@ -57,6 +58,9 @@ class Editor extends React.Component {
       FileAccessor.save(this.props.currentFile, value, () => {
         console.log("Saved file");
       });
+
+      // Notify the parent
+      this.props.onBookContentChanged();
     }
   }
 
@@ -71,10 +75,15 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <section ref="editor" className="editor">
-      </section>
+      <section ref="editor" className="editor"></section>
     );
   }
+}
+
+Editor.propTypes = {
+  currentFile: React.PropTypes.string.isRequired,
+  inLiveMode: React.PropTypes.bool.isRequired,
+  onBookContentChanged: React.PropTypes.func.isRequired
 }
 
 export default Editor;

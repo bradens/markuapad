@@ -1,7 +1,7 @@
 .markuapad .file-browser {
   @extend %box-shadow;
 
-  @include flex-basis(300px);
+  @include flex(0 0 300px);
   @include pad($file-browser-padding 0 $file-browser-padding $file-browser-padding);
   @include user-select(none);
   @include transition(flex-basis $base-transition-duration/2 ease-in-out);
@@ -44,7 +44,7 @@
   // The new file creation form
   .file-name {
     @include display(flex);
-    margin: 0; 
+    margin: 0;
     button {
       font-size: .75em;
       height: 36px;
@@ -91,7 +91,7 @@
 
   // Close the file browser button
   .close-button {
-    @extend %vanilla-button;
+    @extend %close-button;
 
     left: 0;
     padding: 0;
@@ -106,10 +106,6 @@
       display: inline-block;
       height: 16px;
       width: 16px;
-    }
-
-    &:focus {
-      outline: none;
     }
   }
 

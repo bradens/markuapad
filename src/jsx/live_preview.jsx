@@ -1,16 +1,9 @@
 import React from "react";
 
-class Preview extends React.Component {
+class LivePreview extends React.Component {
   render() {
-    if (this.props.inLiveMode) return null
-
-    let clazz = `preview ${this.props.previewState}`
-
     return (
-      <section className={clazz}>
-        <header className="container">
-          <button className="close" onClick={this.props.onClosePreview}><i className="fa fa-times fa-2x"></i></button>
-        </header>
+      <section className={`live-preview ${this.props.previewState}`}>
         <section className="preloader"></section>
         <section className="previewWarnigs"></section>
         <section className="previewErrors">
@@ -22,12 +15,10 @@ class Preview extends React.Component {
   }
 }
 
-Preview.propTypes = {
-  inLiveMode: React.PropTypes.bool.isRequired,
-  onClosePreview: React.PropTypes.func.isRequired,
+LivePreview.propTypes = {
   html: React.PropTypes.string.isRequired,
   previewState: React.PropTypes.string.isRequired,
   previewErrors: React.PropTypes.string
 }
 
-export default Preview;
+export default LivePreview;
