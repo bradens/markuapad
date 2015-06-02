@@ -12,7 +12,8 @@ class FileBrowserListItem extends React.Component {
     if (confirm("Are you sure you want to delete this file?"))
       this.props.onDeleteFile(this.props.file)
 
-    e.stopImmediatePropagation()
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   onChange(e) {

@@ -48,7 +48,8 @@ class Main extends React.Component {
 
   onFileDeleted(filename) {
     // Re-preview
-    this.onGeneratePreview();
+    if (this.inLiveMode)
+      this.onGeneratePreview();
 
     // Select another file
     FileAccessor.list((error, files) => {
