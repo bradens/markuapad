@@ -1,7 +1,7 @@
 .markuapad .file-browser {
   @extend %box-shadow;
 
-  @include flex(0 0 300px);
+  @include flex(0 0 auto);
   @include pad($file-browser-padding 0 $file-browser-padding $file-browser-padding);
   @include user-select(none);
   @include transition(flex-basis $base-transition-duration/2 ease-in-out);
@@ -22,13 +22,14 @@
     border: thin solid rgba(0, 0, 0, .1);
     border-radius: 15px;
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 6px 8px;
     position: absolute;
     right: 10px;
     top: 10px;
+    line-height: 16px;
 
     i {
-      font-size: .75em;
+      font-size: 1em;
     }
 
     &:hover,
@@ -63,7 +64,7 @@
       cursor: pointer;
       display: block;
       font-size: .9em;
-      padding: .2em .5em;
+      padding: .2em 2.5em .2em .5em;
     }
 
     &.current a {
@@ -111,7 +112,7 @@
 
   // Open state
   &.open {
-    @include flex-basis(300px);
+    @include flex-basis(auto);
     .new-file { display: block; }
 
     .close-button span {

@@ -6,8 +6,8 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var commonLoaders = [
-  {test: /\.jsx?$/, loaders: ['babel-loader'], exclude: /node_modules/},
-  {test: /\.scss?$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass')}
+  { test: /\.jsx?$/, loaders: ['babel-loader'], exclude: /node_modules/ },
+  { test: /\.scss?$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass') }
 ];
 
 module.exports = {
@@ -15,7 +15,8 @@ module.exports = {
     entry: {
       app: ['./src/markuapad.js'],
       web: './src/web.js',
-      index: './src/index.js'
+      index: './src/index.js',
+      dist: './src/dist.js'
     },
     output: {
       path: "./build",

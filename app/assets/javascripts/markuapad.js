@@ -44,8 +44,23 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _markuapad = __webpack_require__(1);
+
+	var _markuapad2 = _interopRequireDefault(_markuapad);
+
+	// Expose the Markuapad object as a global
+	if (window !== undefined) window.Markuapad = _markuapad2["default"];
+
+	exports["default"] = _markuapad2["default"];
+	module.exports = exports["default"];
 
 /***/ },
 /* 1 */

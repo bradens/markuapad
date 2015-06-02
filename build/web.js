@@ -101,7 +101,7 @@
 	_underscore2["default"].string = _underscoreString2["default"];
 
 	var DEFAULT_OPTIONS = {
-	  fileAccessor: ExampleFileAccessor
+	  fileAccessor: _file_accessor2["default"]
 	};
 
 	var Markuapad = (function () {
@@ -3069,7 +3069,7 @@
 	      var _this = this;
 
 	      // Re-preview
-	      this.onGeneratePreview();
+	      if (this.inLiveMode) this.onGeneratePreview();
 
 	      // Select another file
 	      _file_accessor2["default"].list(function (error, files) {
@@ -46561,7 +46561,8 @@
 	    value: function onDelete(e) {
 	      if (confirm("Are you sure you want to delete this file?")) this.props.onDeleteFile(this.props.file);
 
-	      e.stopImmediatePropagation();
+	      e.stopPropagation();
+	      e.preventDefault();
 	    }
 	  }, {
 	    key: "onChange",

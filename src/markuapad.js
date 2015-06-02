@@ -10,9 +10,7 @@ import FileAccessor from "./file_accessor";
 
 _.string = _string;
 
-let DEFAULT_OPTIONS = {
-  fileAccessor: ExampleFileAccessor
-}
+let DEFAULT_OPTIONS = {}
 
 class Markuapad {
   constructor() {
