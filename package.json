@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "A web app to write markua documents.",
   "main": "build/markuapad.js",
-  "scripts": {
-    "test": "node node_modules/karma/bin/karma start karma.conf.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ruboss/markuapad"

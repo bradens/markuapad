@@ -12,4 +12,16 @@ You can use this project by including it in your package.json, then including th
 `markuapad.scss` file, and the `build/bundle.js` file. then call `$(element).markuapad(options)`.
 
 ### Development
-TODO
+
+#### Ensure that you have webpack installed
+`npm install -g webpack`
+
+#### Get the code
+Run the following:
+
+* `git clone https://github.com/markuadoc/markuapad`
+* `cd markuapad`
+* `npm install && bower install`
+* `webpack-dev-server`
+
+and you should be up an running on `http://localhost:8080`
