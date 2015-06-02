@@ -1,0 +1,41 @@
+// Bourbon
+@import "./variables";
+@import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
+
+// Move this to an example-only css
+#markuapad-hero {
+  padding: 20px;
+  border: thin solid #bce8f1;
+  margin: 10px;
+  background-color: #d9edf7;
+  border-radius: 3px;
+  h2 { font-family: 'Roboto Slab', serif; font-size: 2em; }
+  position: relative;
+  #markuapad-hero-close {
+    @include appearance(none);
+    background: initial;
+    border-radius: initial;
+    color: initial;
+
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    padding: 5px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: $background;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 8px;
+}

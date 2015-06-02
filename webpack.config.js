@@ -28,7 +28,7 @@ module.exports = {
       loaders: commonLoaders
     },
     plugins: [
-		  new ExtractTextPlugin('app.css', {
+		  new ExtractTextPlugin('[name].css', {
         allChunks: true
       })
 		],

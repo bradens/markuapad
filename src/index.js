@@ -1,3 +1,5 @@
+require("./styles/index.scss");
+
 let noop = () => {};
 
 // Helpers for the localstorage manipulation

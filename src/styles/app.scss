@@ -32,6 +32,13 @@
   @include display(flex);
   @include flex-flow(column nowrap);
   height: 100%;
+
+  h1 { font-size: $h1-font-size; }
+  h2 { font-size: $h2-font-size; }
+  h3 { font-size: $h3-font-size; }
+  h4 { font-size: $h4-font-size; }
+  h5 { font-size: $h5-font-size; }
+  h6 { font-size: $h6-font-size; }
 }
 
 .markuapad .main-view {
@@ -39,24 +46,4 @@
   @include flex(1);
   @include flex-flow(row nowrap);
   position: relative;
-}
-
-h1 { font-size: $h1-font-size; }
-h2 { font-size: $h2-font-size; }
-h3 { font-size: $h3-font-size; }
-h4 { font-size: $h4-font-size; }
-h5 { font-size: $h5-font-size; }
-h6 { font-size: $h6-font-size; }
-
-// Move this to an example-only css
-// FIXME @bradens
-html,
-body {
-  height: 100%;
-}
-
-body {
-  background: $background;
-  font-family: 'Open Sans', sans-serif;
-  margin: 0 8px;
 }

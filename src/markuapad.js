@@ -5,8 +5,8 @@ import _ from "underscore";
 import _string from "underscore.string";
 import Main from "./jsx/main";
 import React from "react";
-import Markua from "markua-js"
-import FileAccessor from "./file_accessor"
+import Markua from "markua-js";
+import FileAccessor from "./file_accessor";
 
 _.string = _string;
 
