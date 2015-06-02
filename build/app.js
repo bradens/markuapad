@@ -92,9 +92,7 @@
 
 	_underscore2["default"].string = _underscoreString2["default"];
 
-	var DEFAULT_OPTIONS = {
-	  fileAccessor: _file_accessor2["default"]
-	};
+	var DEFAULT_OPTIONS = {};
 
 	var Markuapad = (function () {
 	  function Markuapad() {

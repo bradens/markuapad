@@ -53,7 +53,7 @@
 	var _markuapad2 = _interopRequireDefault(_markuapad);
 
 	// Call the api to create a new markuapad instance on the #main element
-	_markuapad2["default"].create("main");
+	_markuapad2["default"].create("main", { fileAccessor: ExampleFileAccessor });
 
 /***/ },
 /* 1 */
@@ -100,9 +100,7 @@
 
 	_underscore2["default"].string = _underscoreString2["default"];
 
-	var DEFAULT_OPTIONS = {
-	  fileAccessor: _file_accessor2["default"]
-	};
+	var DEFAULT_OPTIONS = {};
 
 	var Markuapad = (function () {
 	  function Markuapad() {

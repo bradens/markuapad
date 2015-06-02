@@ -391,10 +391,10 @@ html {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
   box-flex: 0;
-  -webkit-flex: 0 0 300px;
-  -moz-flex: 0 0 300px;
-  -ms-flex: 0 0 300px;
-  flex: 0 0 300px;
+  -webkit-flex: 0 0 auto;
+  -moz-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
   padding: 1em 0 1em 1em;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -416,12 +416,13 @@ html {
     border: thin solid rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 6px 8px;
     position: absolute;
     right: 10px;
-    top: 10px; }
+    top: 10px;
+    line-height: 16px; }
     .markuapad .file-browser .new-file i {
-      font-size: .75em; }
+      font-size: 1em; }
     .markuapad .file-browser .new-file:hover,
     .markuapad .file-browser .new-file:active {
       border-color: rgba(0, 0, 0, 0.4); }
@@ -456,7 +457,7 @@ html {
       cursor: pointer;
       display: block;
       font-size: .9em;
-      padding: 0.2em 0.5em; }
+      padding: 0.2em 2.5em 0.2em 0.5em; }
     .markuapad .file-browser .files-list-item.current a {
       background: rgba(0, 0, 0, 0.1); }
     .markuapad .file-browser .files-list-item:hover a {
@@ -485,10 +486,10 @@ html {
       height: 16px;
       width: 16px; }
   .markuapad .file-browser.open {
-    -webkit-flex-basis: 300px;
-    -moz-flex-basis: 300px;
-    flex-basis: 300px;
-    -ms-flex-preferred-size: 300px; }
+    -webkit-flex-basis: auto;
+    -moz-flex-basis: auto;
+    flex-basis: auto;
+    -ms-flex-preferred-size: auto; }
     .markuapad .file-browser.open .new-file {
       display: block; }
     .markuapad .file-browser.open .close-button span {
