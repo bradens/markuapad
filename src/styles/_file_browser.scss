@@ -63,6 +63,7 @@
   .file-name {
     @include display(flex);
     margin: 0;
+
     button {
       font-size: .75em;
       height: 36px;
@@ -86,10 +87,6 @@
 
     &.current a {
       background: rgba(0, 0, 0, .1);
-    }
-
-    &.child a {
-      padding-left: 2em;
     }
 
     // Hover state
