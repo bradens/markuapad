@@ -35,14 +35,14 @@ class Editor extends React.Component {
     this.editor.on("change", this.onEditorChanged)
 
     // Get the current file to put in the ace editor
-    FileAccessor.get(this.props.currentFile, this.onCurrentFileLoaded);
+    FileAccessor.get(this.props.currentFile.path, this.onCurrentFileLoaded);
   }
 
   // If we get a file change from outside our domain, switch to it.
   // TODO: maybe show a merge warning or something?
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentFile !== this.props.currentFile) {
-      FileAccessor.get(nextProps.currentFile, this.onCurrentFileLoaded);
+      FileAccessor.get(nextProps.currentFile.path, this.onCurrentFileLoaded);
     }
   }
 
@@ -55,7 +55,7 @@ class Editor extends React.Component {
       return
     else {
       this.setState({ currentFileValue: value })
-      FileAccessor.save(this.props.currentFile, value);
+      FileAccessor.save(this.props.currentFile.path, value);
 
       // Notify the parent
       this.props.onBookContentChanged();
@@ -83,7 +83,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  currentFile: React.PropTypes.string.isRequired,
+  currentFile: React.PropTypes.object.isRequired,
   inLiveMode: React.PropTypes.bool.isRequired,
   onBookContentChanged: React.PropTypes.func.isRequired
 }

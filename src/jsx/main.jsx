@@ -6,6 +6,7 @@ import FileBrowser from "./file_browser";
 import Preview from "./preview";
 import LivePreview from "./live_preview";
 import FileAccessor from "../file_accessor";
+import _ from "underscore";
 
 class Main extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Main extends React.Component {
 
     // Setup some initial state
     this.state = {
-      currentFile: `book.txt`,
+      currentFile: { path: `${this.props.projectRoot}/book.txt` },
       previewState: 'closed',
       inLiveMode: true,
       previewHtml: ""
@@ -42,23 +43,23 @@ class Main extends React.Component {
   }
 
   // File event operations
-  onFileAdded(filename) {
-    this.setState({ currentFile: filename });
+  onFileAdded(file) {
+    this.setState({ currentFile: file });
   }
 
-  onFileDeleted(filename) {
+  onFileDeleted(file) {
     // Re-preview
     if (this.inLiveMode)
       this.onGeneratePreview();
 
     // Select another file
     FileAccessor.list((error, files) => {
-      this.setState({ currentFile: files[0] });
+      this.setState({ currentFile: _.reject(files, (file) => { return file.parent || file.type === "folder"; })[0] });
     });
   }
 
-  onChangeFile(filename) {
-    this.setState({ currentFile: filename });
+  onChangeFile(file) {
+    this.setState({ currentFile: file });
   }
 
   // Preview based methods

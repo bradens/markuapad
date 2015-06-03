@@ -71,6 +71,10 @@
       background: rgba(0, 0, 0, .1);
     }
 
+    &.child a {
+      padding-left: 2em;
+    }
+
     // Hover state
     &:hover {
       a { background: rgba(0, 0, 0, .05); }

@@ -25,11 +25,25 @@ class FileBrowser extends React.Component {
 
   // List what files we have
   listFiles() {
-    FileAccessor.list((error, filenames) => {
+    FileAccessor.list((error, files) => {
       if (error)
         console.error(error);
-      else
-        this.setState({ files: filenames });
+      else {
+        // Group the files by their parent
+        let groups = _.groupBy(files, (file) => {
+          return file.parent;
+        });
+
+        // Now sort them
+        files = _.flatten(_.map(groups, (fileGroup, parent) => {
+          if (parent !== "undefined")
+            return [_.findWhere(files, { path: parent })].concat(fileGroup);
+          else
+            return _.reject(fileGroup, (f) => { return f.type === "folder"; });
+        }));
+
+        this.setState({ files: files });
+      }
     });
   }
 
@@ -40,7 +54,7 @@ class FileBrowser extends React.Component {
   // Actually create a new file
   createFile(e) {
     let fileNode = this.refs.filename.getDOMNode()
-    FileAccessor.new(fileNode.value, () => {
+    FileAccessor.new(`${this.props.projectRoot}/${fileNode.value}`, "text", '', () => {
       fileNode.value = '';
       this.setState({ creatingFile: false });
       this.listFiles();
@@ -48,6 +62,7 @@ class FileBrowser extends React.Component {
 
     e.stopPropagation();
     e.preventDefault();
+    return false;
   }
 
   // Open the new file form
@@ -57,7 +72,7 @@ class FileBrowser extends React.Component {
 
   // Delete a file
   onDeleteFile(file) {
-    FileAccessor.delete(file, this.listFiles);
+    FileAccessor.delete(file.path, this.listFiles);
   }
 
   renderFileCreator() {

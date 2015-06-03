@@ -1,33 +1,52 @@
 require("./styles/index.scss");
 
+let _ = require("underscore");
+
 let noop = () => {};
 
 // Helpers for the localstorage manipulation
 let getCached = (key, defaultValue) => {
   let value;
   if (value = localStorage.getItem(key))
-    return value;
+    try {
+      value = JSON.parse(value);
+      return value
+    }
+    catch(error) {
+      return value;
+    }
   else
     return defaultValue;
 }
+
 let setCached = (key, value) => {
-  localStorage.setItem(key, value);
+  localStorage.setItem(key, (typeof value === "string" ? value : JSON.stringify(value)));
   return value;
 }
 
+let INITIAL_FILES = [
+  { path: "my-first-markuapad-book/code", type: "folder", content: null },
+  { path: "my-first-markuapad-book/book.txt", type: "text", content: "chapter1.txt\nchapter2.txt" },
+  { path: "my-first-markuapad-book/chapter1.txt", type: "text", content: "#Chapter 1\n\nHere is the first chapter" },
+  { path: "my-first-markuapad-book/chapter2.txt", type: "text", content: "#Chapter 2\n\nHere is the second chapter" },
+  // { path: "my-first-markuapad-book/images", type: "folder", content: null },
+  // { path: "my-first-markuapad-book/images/chapter2.png", type: "image", content: "http://c4.staticflickr.com/4/3765/12647024594_09444dea87_n.jpg", parent: "my-first-markuapad-book/images" },
+  { path: "my-first-markuapad-book/code/sample.js", type: "code", content: "function() {\n  console.log('Hello, World!');\n}\n", parent: "my-first-markuapad-book/code" }
+]
+
 // Create our client side files for markuapad to work with.
 if (!getCached("markuapad_files")) {
-  setCached("my-first-markuapad-book/book.txt", "chapter1.txt\nchapter2.txt");
-  setCached("my-first-markuapad-book/chapter1.txt", "#Chapter 1\n\nHere is the first chapter");
-  setCached("my-first-markuapad-book/chapter2.txt", "#Chapter 2\n\nHere is the second chapter");
-  setCached("markuapad_files", ["my-first-markuapad-book/book.txt", "my-first-markuapad-book/chapter1.txt", "my-first-markuapad-book/chapter2.txt"])
+  for (let file of INITIAL_FILES) {
+    setCached(file.path, file);
+  }
+  setCached("markuapad_files", _.map(INITIAL_FILES, (file) => { return _.omit(file, "content") }));
 }
 
 // This is the file accessor that you must implement before creating a new markuapad instance.
 // All I/O operations go through this.
 // This implementation is for use in the browser, and is only for demo purposes, so we use
 // localstorage as the data store.
-// Since this is as client side data store implementation, there is
+// Since this is as client side data store implementation
 class ExampleFileAccessor {
   constructor(projectRoot) {
     this.projectRoot = projectRoot
@@ -36,43 +55,50 @@ class ExampleFileAccessor {
   }
 
   get(path, cb = noop) {
-    cb(null, getCached(`${this.projectRoot}/${path}`));
+    let file = getCached(path);
+    cb(null, file && file.content);
   }
 
   getSync(path) {
-    return getCached(`${this.projectRoot}/${path}`);
+    let file = getCached(path);
+    return file && file.content;
   }
 
   list(cb = noop) {
     let files = getCached("markuapad_files")
-    cb(null, files ? files.split(",").map(function(k) { return k.substr(k.indexOf("/") + 1) }) : []);
+    cb(null, files ? _.map(files, function(file) { return _.omit(file, "content"); }) : []);
   }
 
-  save(path, contents, cb = noop) {
-    setCached(`${this.projectRoot}/${path}`, contents);
+  save(path, content, cb = noop) {
+    // Get the current version
+    let file = getCached(path);
+    file.content = content;
+
+    setCached(file.path, file);
     cb(null);
   }
 
-  new(path, cb = noop) {
-    setCached(`${this.projectRoot}/${path}`, "");
-    setCached("markuapad_files", getCached("markuapad_files").split(",").concat(`${this.projectRoot}/${path}`));
+  new(path, type = "text", content = "", cb = noop) {
+    let file = { path: path, type: type, content: content }
+
+    setCached(path, file);
+    setCached("markuapad_files", getCached("markuapad_files").concat([file]));
 
     cb(null);
 
     // Fire stored callbacks
     for (let callback of this.onAddCallbacks)
-      callback(path);
+      callback(file);
   }
 
   delete(path, cb = noop) {
-    let expandedPath = `${this.projectRoot}/${path}`;
-    let files = getCached("markuapad_files").split(",");
+    let files = getCached("markuapad_files");
 
     // Remove the file
-    localStorage.removeItem(expandedPath);
+    localStorage.removeItem(path);
 
     // Update file list
-    files.splice(files.indexOf(expandedPath), 1);
+    files = _.reject(files, (file) => { return file.path === path; });
     setCached("markuapad_files", files)
 
     // Call the given callback
