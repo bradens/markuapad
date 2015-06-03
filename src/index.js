@@ -25,21 +25,29 @@ let setCached = (key, value) => {
 }
 
 let INITIAL_FILES = [
-  { path: "my-first-markuapad-book/code", type: "folder", content: null },
-  { path: "my-first-markuapad-book/book.txt", type: "text", content: "chapter1.txt\nchapter2.txt" },
-  { path: "my-first-markuapad-book/chapter1.txt", type: "text", content: "#Chapter 1\n\nHere is the first chapter" },
-  { path: "my-first-markuapad-book/chapter2.txt", type: "text", content: "#Chapter 2\n\nHere is the second chapter" },
-  // { path: "my-first-markuapad-book/images", type: "folder", content: null },
-  // { path: "my-first-markuapad-book/images/chapter2.png", type: "image", content: "http://c4.staticflickr.com/4/3765/12647024594_09444dea87_n.jpg", parent: "my-first-markuapad-book/images" },
-  { path: "my-first-markuapad-book/code/sample.js", type: "code", content: "function() {\n  console.log('Hello, World!');\n}\n", parent: "my-first-markuapad-book/code" }
+  { filename: "my-first-markuapad-book/book.txt", content: "chapter1.txt\nchapter2.txt" },
+  { filename: "my-first-markuapad-book/manifest_files/chapter1.txt", in_sample: false, content: "#Chapter 1\n\nHere is the first chapter" },
+  { filename: "my-first-markuapad-book/manifest_files/chapter2.txt", in_sample: false, content: "#Chapter 2\n\nHere is the second chapter" },
+  { filename: "my-first-markuapad-book/manifest_code/sample.js", content: "function() {\n  console.log('Hello, World!');\n}\n" }
+]
+
+let MANIFEST_FILES = [
+  { filename: "my-first-markuapad-book/manifest_files", files: [{ filename: "chapter1.txt" }, { filename: "chapter2.txt" }]},
+  { filename: "my-first-markuapad-book/manifest_code", files: [{ filename: "sample.js" }]},
+  { filename: "my-first-markuapad-book/manifest_images", files: []}
 ]
 
 // Create our client side files for markuapad to work with.
-if (!getCached("markuapad_files")) {
+if (!getCached("my-first-markuapad-book/manifest_files")) {
   for (let file of INITIAL_FILES) {
-    setCached(file.path, file);
+    let initialFilename = file.filename
+    file.filename = file.filename.substr(file.filename.lastIndexOf("/") + 1)
+    setCached(initialFilename, file);
   }
-  setCached("markuapad_files", _.map(INITIAL_FILES, (file) => { return _.omit(file, "content") }));
+
+  for (let file of MANIFEST_FILES) {
+    setCached(file.filename, file.files);
+  }
 }
 
 // This is the file accessor that you must implement before creating a new markuapad instance.
@@ -52,38 +60,64 @@ class ExampleFileAccessor {
     this.projectRoot = projectRoot
     this.onAddCallbacks = [];
     this.onDeleteCallbacks = [];
+    this.manifestFilesKey = `${this.projectRoot}/manifest_files`;
+    this.manifestCodeKey = `${this.projectRoot}/manifest_code`;
+    this.manifestImagesKey = `${this.projectRoot}/manifest_images`;
   }
 
-  get(path, cb = noop) {
-    let file = getCached(path);
+  getFilePrefix(type) {
+    if (type === "manuscript")
+      return this.manifestFilesKey;
+    else if (type === "code")
+      return this.manifestCodeKey;
+    else
+      return this.projectRoot;
+  }
+
+  get(path, cb = noop, type = "manuscript") {
+    let file = getCached(`${this.getFilePrefix(type)}/${path}`);
     cb(null, file && file.content);
   }
 
-  getSync(path) {
-    let file = getCached(path);
+  getSync(path, type = "manuscript") {
+    let file = getCached(`${this.getFilePrefix(type)}/${path}`);
     return file && file.content;
   }
 
-  list(cb = noop) {
-    let files = getCached("markuapad_files")
+  listFiles(cb = noop) {
+    let files = _.map(getCached(this.manifestFilesKey), (f) => { return _.extend(f, { type: "manuscript" }); });
+    cb(null, files);
+  }
+
+  listImages(cb = noop) {
+    let files = _.map(getCached(this.manifestImagesKey), (f) => { return _.extend(f, { type: "images" }); });
     cb(null, files ? _.map(files, function(file) { return _.omit(file, "content"); }) : []);
   }
 
-  save(path, content, cb = noop) {
+  listCode(cb = noop) {
+    let files = _.map(getCached(this.manifestCodeKey), (f) => { return _.extend(f, { type: "code" }); });
+    cb(null, files ? _.map(files, function(file) { return _.omit(file, "content"); }) : []);
+  }
+
+  save(filename, type = "manuscript", content = "", cb = noop) {
+    // Do we want a code sample or manuscript file
+    let filePath = `${this.getFilePrefix(type)}/${filename}`;
+
     // Get the current version
-    let file = getCached(path);
+    let file = getCached(filePath);
     file.content = content;
 
-    setCached(file.path, file);
+    setCached(filePath, file);
     cb(null);
   }
 
-  new(path, type = "text", content = "", cb = noop) {
-    let file = { path: path, type: type, content: content }
-
-    setCached(path, file);
-    setCached("markuapad_files", getCached("markuapad_files").concat([file]));
-
+  new(filename, type = "manuscript", content = "", cb = noop) {
+    let file = { filename: filename, content: content }
+    let filePath = `${this.getFilePrefix(type)}/${filename}`;
+    let manifestFiles = getCached(this.manifestFilesKey).concat([_.omit(file, "content")])
+    setCached(filePath, file);
+    setCached(this.manifestFilesKey, manifestFiles);
+    setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(manifestFiles, (f) => { return f.filename }).join("\n")});
     cb(null);
 
     // Fire stored callbacks
@@ -91,22 +125,24 @@ class ExampleFileAccessor {
       callback(file);
   }
 
-  delete(path, cb = noop) {
-    let files = getCached("markuapad_files");
+  delete(filename, type = "manuscript", cb = noop) {
+    let files = getCached(this.manifestFilesKey);
+    let filePath = `${this.getFilePrefix(type)}/${filename}`;
 
     // Remove the file
-    localStorage.removeItem(path);
+    localStorage.removeItem(filePath);
 
     // Update file list
-    files = _.reject(files, (file) => { return file.path === path; });
-    setCached("markuapad_files", files)
+    files = _.reject(files, (file) => { return file.filename === filename; });
+    setCached(this.manifestFilesKey, files)
+    setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(files, (f) => { return f.filename }).join("\n") })
 
     // Call the given callback
     cb(null);
 
     // Fire stored callbacks
     for (let callback of this.onDeleteCallbacks)
-      callback(path);
+      callback(filename);
   }
 
   onAdd(cb = noop) {

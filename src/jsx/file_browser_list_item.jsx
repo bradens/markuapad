@@ -6,7 +6,6 @@ class FileBrowserListItem extends React.Component {
 
     this.onDelete = this.onDelete.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.renderType = this.renderType.bind(this);
   }
 
   onDelete(e) {
@@ -18,30 +17,7 @@ class FileBrowserListItem extends React.Component {
   }
 
   onChange(e) {
-    if (this.props.file.type === "folder")
-      return
-
     this.props.onChangeFile(this.props.file)
-  }
-
-  renderType() {
-    let iconClass = '';
-    switch (this.props.file.type) {
-      case 'text':
-        iconClass = "fa-file-text";
-        break;
-      case 'folder':
-        iconClass = "fa-folder-open";
-        break;
-      case 'image':
-        iconClass = "fa-file-image-o";
-        break;
-      case 'code':
-        iconClass = "fa-code";
-        break
-    }
-
-    return (<i className={`fa ${iconClass}`}></i>);
   }
 
   render() {
@@ -50,9 +26,9 @@ class FileBrowserListItem extends React.Component {
     return (
       <li className={clazz} onClick={this.onChange}>
         <a>
-          { this.renderType() } { this.props.file.path.substr(this.props.file.path.lastIndexOf("/") + 1) }
+          <i className="fa fa-file-o"></i> { this.props.file.filename }
         </a>
-        { this.props.file.type !== "folder" ? <button onClick={this.onDelete}><i className="fa fa-times"></i></button> : null }
+        <button onClick={this.onDelete}><i className="fa fa-times"></i></button>
       </li>
     );
   }

@@ -12,8 +12,16 @@ class FileAccessor {
     return this.fileAccessorDelegate.getSync(...arguments);
   }
 
-  list() {
-    this.fileAccessorDelegate.list(...arguments);
+  listFiles() {
+    this.fileAccessorDelegate.listFiles(...arguments);
+  }
+
+  listImages() {
+    this.fileAccessorDelegate.listImages(...arguments);
+  }
+
+  listCode() {
+    this.fileAccessorDelegate.listCode(...arguments);
   }
 
   save() {

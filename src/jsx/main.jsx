@@ -14,7 +14,7 @@ class Main extends React.Component {
 
     // Setup some initial state
     this.state = {
-      currentFile: { path: `${this.props.projectRoot}/book.txt` },
+      currentFile: null,
       previewState: 'closed',
       inLiveMode: true,
       previewHtml: ""
@@ -53,8 +53,10 @@ class Main extends React.Component {
       this.onGeneratePreview();
 
     // Select another file
-    FileAccessor.list((error, files) => {
-      this.setState({ currentFile: _.reject(files, (file) => { return file.parent || file.type === "folder"; })[0] });
+    FileAccessor.listFiles((error, files) => {
+      this.setState({ currentFile: files[0] });
+
+      if (this.state.inLiveMode) this.onGeneratePreview();
     });
   }
 

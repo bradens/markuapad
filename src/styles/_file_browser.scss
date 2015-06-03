@@ -9,11 +9,28 @@
   background: $files-background;
   min-height: $files-min-height;
 
-  // The little "Files" header
+  .file-types-list {
+    padding-right: 70px;
+    li {
+      display: inline-block;
+      margin: 0 5px;
+    }
+  }
+
+  // The little file-type headers
   .title {
     color: #aaa;
     font-variant: small-caps;
     font-size: 1em;
+    cursor: pointer;
+
+    &:hover {
+      color: $light-blue;
+    }
+
+    &.selected {
+      color: $blue;
+    }
   }
 
   // The new file creation button

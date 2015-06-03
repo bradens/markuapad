@@ -17,6 +17,20 @@ class Editor extends React.Component {
 
   // Setup all the editor options when we mount.
   componentDidMount() {
+    this.setupEditor();
+  }
+
+  // If we get a file change from outside our domain, switch to it.
+  // TODO: maybe show a merge warning or something?
+  componentDidUpdate(lastProps, lastState) {
+    if (lastProps.currentFile !== this.props.currentFile) {
+      this.setupEditor();
+    }
+  }
+
+  setupEditor() {
+    if (!this.props.currentFile) return;
+
     // Setup the ace editor
     this.editor = ace.edit(this.refs.editor.getDOMNode());
     this.editor.getSession().setMode('ace/mode/markdown');
@@ -35,15 +49,7 @@ class Editor extends React.Component {
     this.editor.on("change", this.onEditorChanged)
 
     // Get the current file to put in the ace editor
-    FileAccessor.get(this.props.currentFile.path, this.onCurrentFileLoaded);
-  }
-
-  // If we get a file change from outside our domain, switch to it.
-  // TODO: maybe show a merge warning or something?
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentFile !== this.props.currentFile) {
-      FileAccessor.get(nextProps.currentFile.path, this.onCurrentFileLoaded);
-    }
+    FileAccessor.get(this.props.currentFile.filename, this.onCurrentFileLoaded, this.props.currentFile.type);
   }
 
   // When the editor value changes, then we have to set our current state,
@@ -55,35 +61,47 @@ class Editor extends React.Component {
       return
     else {
       this.setState({ currentFileValue: value })
-      FileAccessor.save(this.props.currentFile.path, value);
-
-      // Notify the parent
-      this.props.onBookContentChanged();
+      FileAccessor.save(this.props.currentFile.filename, this.props.currentFile.type, value, this.props.onBookContentChanged);
     }
   }
 
   // After we load a file, set the value of the editor to it
   onCurrentFileLoaded(error, contents) {
     if (error)
-      console.error(error)
+      return console.error(error)
     else {
       // Focus the editor
-      this.editor.focus();
+      this.editor.focus;
 
       // Set the value of it
       this.setState({ currentFileValue: contents }, () => this.editor.setValue(contents, -1));
     }
   }
 
-  render() {
+  renderEditor() {
     return (
       <section ref="editor" className="editor"></section>
+    );
+  }
+
+  renderNoFileHelp() {
+    return (
+      <section className="editor nofile">
+        <h3>No file selected.</h3>
+        <p>Click one in the list on the left to start editing</p>
+      </section>
+    );
+  }
+
+  render() {
+    return (
+      this.props.currentFile ? this.renderEditor() : this.renderNoFileHelp()
     );
   }
 }
 
 Editor.propTypes = {
-  currentFile: React.PropTypes.object.isRequired,
+  currentFile: React.PropTypes.object,
   inLiveMode: React.PropTypes.bool.isRequired,
   onBookContentChanged: React.PropTypes.func.isRequired
 }

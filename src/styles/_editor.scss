@@ -9,6 +9,13 @@
     -ms-font-feature-settings: initial;
     -moz-font-feature-settings: initial;
 
+    // No file selected styles
+    &.nofile {
+      text-align: center;
+      padding: 15%;
+      background: $editor-background;
+    }
+
     // Overrides from ace editor
     &.emacs-mode .ace_cursor {
       background-color: #222;
