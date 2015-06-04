@@ -22,8 +22,8 @@ class Markuapad {
     this.options = _.extend(this.options, options);
 
     // Project Root
-    let projectTitle = "My First Markuapad Book";
-    let projectRoot = _.string.slugify(projectTitle);
+    let projectTitle = options.title || "My First Markuapad Book";
+    let projectRoot = options.slug || _.string.slugify(projectTitle);
 
     // Instantiate a new markua processor instance
     this.markua = new Markua(projectRoot, { fileAccessor: this.options.fileAccessor })
