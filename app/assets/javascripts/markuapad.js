@@ -46513,7 +46513,8 @@
 	    this.state = {
 	      files: [],
 	      closed: false,
-	      fileMode: "manuscript"
+	      fileMode: "manuscript",
+	      busy: false
 	    };
 
 	    // Autobind
@@ -46559,7 +46560,9 @@
 	    value: function listManuscript() {
 	      var _this = this;
 
+	      this.busy(true);
 	      _file_accessor2["default"].listFiles(function (error, files) {
+	        _this.busy(false);
 	        if (error) console.error(error);else {
 	          _this.setState({ files: files });
 	        }
@@ -46572,7 +46575,9 @@
 	    value: function listImages() {
 	      var _this2 = this;
 
+	      this.busy(true);
 	      _file_accessor2["default"].listImages(function (error, files) {
+	        _this2.busy(false);
 	        if (error) console.error(error);else {
 	          _this2.setState({ files: files });
 	        }
@@ -46585,11 +46590,23 @@
 	    value: function listCode() {
 	      var _this3 = this;
 
+	      this.busy(true);
 	      _file_accessor2["default"].listCode(function (error, files) {
+	        _this3.busy(false);
 	        if (error) console.error(error);else {
 	          _this3.setState({ files: files });
 	        }
 	      });
+	    }
+	  }, {
+	    key: "busy",
+	    value: function busy(busyState) {
+	      this.setState({ busy: busyState });
+	    }
+	  }, {
+	    key: "free",
+	    value: function free() {
+	      this.setState({ busy: false });
 	    }
 	  }, {
 	    key: "toggleClose",
@@ -46650,10 +46667,29 @@
 	      );
 	    }
 	  }, {
-	    key: "render",
-	    value: function render() {
+	    key: "renderFilesList",
+	    value: function renderFilesList() {
 	      var _this5 = this;
 
+	      if (this.state.busy) return _react2["default"].createElement("i", { className: "busy-indicator fa fa-spin fa-2x fa-circle-o-notch" });else {
+	        return _react2["default"].createElement(
+	          "ul",
+	          { className: "files-list" },
+	          _underscore2["default"].map(this.state.files, function (file, i) {
+	            return _react2["default"].createElement(_file_browser_list_item2["default"], {
+	              key: i,
+	              fileMode: _this5.state.fileMode,
+	              onDeleteFile: _this5.onDeleteFile,
+	              onChangeFile: _this5.props.onChangeFile,
+	              isCurrent: _this5.props.currentFile === file,
+	              file: file });
+	          })
+	        );
+	      }
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
 	      var clazz = "file-browser " + (this.state.closed ? "closed" : "open");
 	      var newFileClassName = "new-file" + (this.state.creatingFile ? " active" : "");
 	      return _react2["default"].createElement(
@@ -46712,19 +46748,7 @@
 	          )
 	        ),
 	        this.renderFileCreator(),
-	        _react2["default"].createElement(
-	          "ul",
-	          { className: "files-list" },
-	          _underscore2["default"].map(this.state.files, function (file, i) {
-	            return _react2["default"].createElement(_file_browser_list_item2["default"], {
-	              key: i,
-	              fileMode: _this5.state.fileMode,
-	              onDeleteFile: _this5.onDeleteFile,
-	              onChangeFile: _this5.props.onChangeFile,
-	              isCurrent: _this5.props.currentFile === file,
-	              file: file });
-	          })
-	        ),
+	        this.renderFilesList(),
 	        _react2["default"].createElement(
 	          "button",
 	          { className: "close-button", onClick: this.toggleClose },
