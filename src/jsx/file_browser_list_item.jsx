@@ -20,13 +20,24 @@ class FileBrowserListItem extends React.Component {
     this.props.onChangeFile(this.props.file)
   }
 
+  getFileIconClass() {
+    switch (this.props.fileMode) {
+      case 'manuscript':
+        return 'fa-file-o';
+      case 'images':
+        return 'fa-file-image';
+      case 'code':
+        return 'fa-code';
+    }
+  }
+
   render() {
     let clazz = `files-list-item${this.props.isCurrent ? ' current' : ''}${this.props.file.parent ? ' child' : ''}`
 
     return (
       <li className={clazz} onClick={this.onChange}>
         <a>
-          <i className="fa fa-file-o"></i> { this.props.file.filename }
+          <i className={`fa ${this.getFileIconClass()}`}></i> { this.props.file.filename }
         </a>
         <button onClick={this.onDelete}><i className="fa fa-times"></i></button>
       </li>
@@ -36,6 +47,7 @@ class FileBrowserListItem extends React.Component {
 
 FileBrowserListItem.propTypes = {
   file: React.PropTypes.object.isRequired,
+  fileMode: React.PropTypes.string.isRequired,
   isCurrent: React.PropTypes.bool.isRequired,
   onDeleteFile: React.PropTypes.func.isRequired,
   onChangeFile: React.PropTypes.func.isRequired

@@ -12,20 +12,26 @@ class FileBrowser extends React.Component {
     this.state = {
       files: [],
       closed: false,
-      fileMode: 'files'
+      fileMode: 'manuscript'
     };
 
     // Autobind
     this.toggleClose = this.toggleClose.bind(this);
     this.newFile = this.newFile.bind(this);
     this.createFile = this.createFile.bind(this);
-    this.listFiles = this.listFiles.bind(this);
+    this.listManuscript = this.listManuscript.bind(this);
     this.onDeleteFile = this.onDeleteFile.bind(this);
     this.onChangeMode = this.onChangeMode.bind(this);
+    this.onFileDeleted = this.onFileDeleted.bind(this);
+    this.listCode = this.listCode.bind(this);
+    this.listManuscript = this.listManuscript.bind(this);
+    this.listImages = this.listImages.bind(this);
+
+    FileAccessor.onDelete(this.onFileDeleted);
   }
 
   componentDidMount() {
-    this.listFiles();
+    this.listManuscript();
   }
 
   componentDidUpdate(lastProps, lastState) {
@@ -34,8 +40,13 @@ class FileBrowser extends React.Component {
     }
   }
 
+  // We need to rechoose an appropriate file
+  onFileDeleted() {
+    this.props.onChangeFile(this.state.files[0])
+  }
+
   // List what files we have
-  listFiles() {
+  listManuscript() {
     FileAccessor.listFiles((error, files) => {
       if (error)
         console.error(error);
@@ -78,10 +89,10 @@ class FileBrowser extends React.Component {
   // Actually create a new file
   createFile(e) {
     let fileNode = this.refs.filename.getDOMNode()
-    FileAccessor.new(fileNode.value, "manuscript", '', () => {
+    FileAccessor.new(fileNode.value, this.state.fileMode, '', () => {
       fileNode.value = '';
       this.setState({ creatingFile: false });
-      this.listFiles();
+      this[`list${_.string.capitalize(this.state.fileMode)}`]()
     });
 
     e.stopPropagation();
@@ -96,7 +107,7 @@ class FileBrowser extends React.Component {
 
   // Delete a file
   onDeleteFile(file) {
-    FileAccessor.delete(file.filename, "manuscript", this.listFiles);
+    FileAccessor.delete(file.filename, this.state.fileMode, this[`list${_.string.capitalize(this.state.fileMode)}`]);
   }
 
   renderFileCreator() {
@@ -116,7 +127,7 @@ class FileBrowser extends React.Component {
     return (
       <section className={clazz}>
         <ul className="file-types-list">
-          <li><a onClick={_.partial(this.onChangeMode, 'files')}><h4 className={`title${this.state.fileMode === 'files' ? ' selected' : ''}`}>files</h4></a></li>
+          <li><a onClick={_.partial(this.onChangeMode, 'manuscript')}><h4 className={`title${this.state.fileMode === 'manuscript' ? ' selected' : ''}`}>files</h4></a></li>
           <li><a onClick={_.partial(this.onChangeMode, 'images')}><h4 className={`title${this.state.fileMode === 'images' ? ' selected' : ''}`}>images</h4></a></li>
           <li><a onClick={_.partial(this.onChangeMode, 'code')}><h4 className={`title${this.state.fileMode === 'code' ? ' selected' : ''}`}>code</h4></a></li>
         </ul>
@@ -130,6 +141,7 @@ class FileBrowser extends React.Component {
               return (
                 <FileBrowserListItem
                   key={i}
+                  fileMode={this.state.fileMode}
                   onDeleteFile={this.onDeleteFile}
                   onChangeFile={this.props.onChangeFile}
                   isCurrent={this.props.currentFile === file}

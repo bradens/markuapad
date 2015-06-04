@@ -112,12 +112,17 @@ class ExampleFileAccessor {
   }
 
   new(filename, type = "manuscript", content = "", cb = noop) {
-    let file = { filename: filename, content: content }
+    let file = { filename: filename, content: content, type: type }
     let filePath = `${this.getFilePrefix(type)}/${filename}`;
-    let manifestFiles = getCached(this.manifestFilesKey).concat([_.omit(file, "content")])
+    let manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey
+    let manifestFiles = getCached(manifestKey).concat([_.omit(file, "content")]);
+
     setCached(filePath, file);
-    setCached(this.manifestFilesKey, manifestFiles);
-    setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(manifestFiles, (f) => { return f.filename }).join("\n")});
+    setCached(manifestKey, manifestFiles);
+
+    // when updating manuscript, make sure to update the book.txt
+    if (type === "manuscript") setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(manifestFiles, (f) => { return f.filename }).join("\n")});
+
     cb(null);
 
     // Fire stored callbacks
@@ -126,7 +131,8 @@ class ExampleFileAccessor {
   }
 
   delete(filename, type = "manuscript", cb = noop) {
-    let files = getCached(this.manifestFilesKey);
+    let manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey
+    let files = getCached(manifestKey);
     let filePath = `${this.getFilePrefix(type)}/${filename}`;
 
     // Remove the file
@@ -134,8 +140,9 @@ class ExampleFileAccessor {
 
     // Update file list
     files = _.reject(files, (file) => { return file.filename === filename; });
-    setCached(this.manifestFilesKey, files)
-    setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(files, (f) => { return f.filename }).join("\n") })
+    setCached(manifestKey, files)
+
+    if (type === "manuscript") setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(files, (f) => { return f.filename }).join("\n") })
 
     // Call the given callback
     cb(null);
