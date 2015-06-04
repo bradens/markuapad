@@ -125,8 +125,8 @@
 	      this.options = _underscore2["default"].extend(this.options, options);
 
 	      // Project Root
-	      var projectTitle = "My First Markuapad Book";
-	      var projectRoot = _underscore2["default"].string.slugify(projectTitle);
+	      var projectTitle = options.title || "My First Markuapad Book";
+	      var projectRoot = options.slug || _underscore2["default"].string.slugify(projectTitle);
 
 	      // Instantiate a new markua processor instance
 	      this.markua = new _markuaJs2["default"](projectRoot, { fileAccessor: this.options.fileAccessor });
