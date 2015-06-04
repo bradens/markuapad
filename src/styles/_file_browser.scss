@@ -72,6 +72,16 @@
     }
   }
 
+  // Busy indicator
+  .busy-indicator {
+    position: absolute;
+    top: 3em;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: $light-blue;
+  }
+
   // A file list item
   .files-list-item {
     position: relative;

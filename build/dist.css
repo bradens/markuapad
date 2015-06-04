@@ -383,7 +383,7 @@ html {
   -moz-font-feature-settings: initial; }
   .markuapad .editor.nofile {
     text-align: center;
-    padding: 15%;
+    padding: 15% 0;
     background: #fff; }
   .markuapad .editor.emacs-mode .ace_cursor {
     background-color: #222;
@@ -460,6 +460,13 @@ html {
       height: 36px;
       margin: 0 5px;
       width: 80px; }
+  .markuapad .file-browser .busy-indicator {
+    position: absolute;
+    top: 3em;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #6f99d5; }
   .markuapad .file-browser .files-list-item {
     position: relative; }
     .markuapad .file-browser .files-list-item a {

@@ -12,7 +12,8 @@ class FileBrowser extends React.Component {
     this.state = {
       files: [],
       closed: false,
-      fileMode: 'manuscript'
+      fileMode: 'manuscript',
+      busy: false
     };
 
     // Autobind
@@ -47,7 +48,9 @@ class FileBrowser extends React.Component {
 
   // List what files we have
   listManuscript() {
+    this.busy(true);
     FileAccessor.listFiles((error, files) => {
+      this.busy(false);
       if (error)
         console.error(error);
       else {
@@ -58,7 +61,9 @@ class FileBrowser extends React.Component {
 
   // List what files we have
   listImages() {
+    this.busy(true);
     FileAccessor.listImages((error, files) => {
+      this.busy(false);
       if (error)
         console.error(error);
       else {
@@ -69,13 +74,23 @@ class FileBrowser extends React.Component {
 
   // List what files we have
   listCode() {
+    this.busy(true);
     FileAccessor.listCode((error, files) => {
+      this.busy(false);
       if (error)
         console.error(error);
       else {
         this.setState({ files: files });
       }
     });
+  }
+
+  busy(busyState) {
+    this.setState({ busy: busyState });
+  }
+
+  free() {
+    this.setState({ busy: false });
   }
 
   toggleClose(e) {
@@ -121,20 +136,11 @@ class FileBrowser extends React.Component {
     );
   }
 
-  render() {
-    let clazz = `file-browser ${this.state.closed ? "closed" : "open"}`
-    let newFileClassName = `new-file${ this.state.creatingFile ? " active" : ""}`;
-    return (
-      <section className={clazz}>
-        <ul className="file-types-list">
-          <li><a onClick={_.partial(this.onChangeMode, 'manuscript')}><h4 className={`title${this.state.fileMode === 'manuscript' ? ' selected' : ''}`}>files</h4></a></li>
-          <li><a onClick={_.partial(this.onChangeMode, 'images')}><h4 className={`title${this.state.fileMode === 'images' ? ' selected' : ''}`}>images</h4></a></li>
-          <li><a onClick={_.partial(this.onChangeMode, 'code')}><h4 className={`title${this.state.fileMode === 'code' ? ' selected' : ''}`}>code</h4></a></li>
-        </ul>
-        <div className={newFileClassName} onClick={this.newFile}>
-          <i className="fa fa-plus"> </i>
-        </div>
-        { this.renderFileCreator() }
+  renderFilesList() {
+    if (this.state.busy)
+      return <i className="busy-indicator fa fa-spin fa-2x fa-circle-o-notch"></i>;
+    else {
+      return (
         <ul className="files-list">
           {
             _.map(this.state.files, (file, i) => {
@@ -150,6 +156,25 @@ class FileBrowser extends React.Component {
             })
           }
         </ul>
+      )
+    }
+  }
+
+  render() {
+    let clazz = `file-browser ${this.state.closed ? "closed" : "open"}`
+    let newFileClassName = `new-file${ this.state.creatingFile ? " active" : ""}`;
+    return (
+      <section className={clazz}>
+        <ul className="file-types-list">
+          <li><a onClick={_.partial(this.onChangeMode, 'manuscript')}><h4 className={`title${this.state.fileMode === 'manuscript' ? ' selected' : ''}`}>files</h4></a></li>
+          <li><a onClick={_.partial(this.onChangeMode, 'images')}><h4 className={`title${this.state.fileMode === 'images' ? ' selected' : ''}`}>images</h4></a></li>
+          <li><a onClick={_.partial(this.onChangeMode, 'code')}><h4 className={`title${this.state.fileMode === 'code' ? ' selected' : ''}`}>code</h4></a></li>
+        </ul>
+        <div className={newFileClassName} onClick={this.newFile}>
+          <i className="fa fa-plus"> </i>
+        </div>
+        { this.renderFileCreator() }
+        { this.renderFilesList() }
         <button className="close-button" onClick={this.toggleClose}><span></span></button>
       </section>
     );
