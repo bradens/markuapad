@@ -60,6 +60,7 @@ class ExampleFileAccessor {
     this.projectRoot = projectRoot
     this.onAddCallbacks = [];
     this.onDeleteCallbacks = [];
+    this.onManuscriptChangeCallbacks = [];
     this.manifestFilesKey = `${this.projectRoot}/manifest_files`;
     this.manifestCodeKey = `${this.projectRoot}/manifest_code`;
     this.manifestImagesKey = `${this.projectRoot}/manifest_images`;
@@ -111,6 +112,17 @@ class ExampleFileAccessor {
     cb(null);
   }
 
+  saveManuscript(files, cb = noop) {
+    setCached(this.manifestFilesKey, files);
+    setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(files, (f) => { return f.filename }).join("\n") })
+
+    // Fire stored callbacks
+    for (let callback of this.onManuscriptChangeCallbacks)
+      callback(null);
+
+    cb(null);
+  }
+
   new(filename, type = "manuscript", content = "", cb = noop) {
     let file = { filename: filename, content: content, type: type }
     let filePath = `${this.getFilePrefix(type)}/${filename}`;
@@ -158,6 +170,10 @@ class ExampleFileAccessor {
 
   onDelete(cb = noop) {
     this.onDeleteCallbacks.push(cb);
+  }
+
+  onManuscriptChange(cb = noop) {
+    this.onManuscriptChangeCallbacks.push(cb);
   }
 }
 

@@ -2,6 +2,9 @@ import React from "react";
 import _ from "underscore";
 import FileBrowserListItem from "./file_browser_list_item";
 import FileAccessor from "../file_accessor";
+import HTML5Backend from 'react-dnd/modules/backends/HTML5';
+import { DragDropContext } from 'react-dnd';
+
 import _string from "underscore.string";
 _.string = _string;
 
@@ -27,6 +30,8 @@ class FileBrowser extends React.Component {
     this.listCode = this.listCode.bind(this);
     this.listManuscript = this.listManuscript.bind(this);
     this.listImages = this.listImages.bind(this);
+    this.moveFile = this.moveFile.bind(this);
+    this.saveManuscript = this.saveManuscript.bind(this);
 
     FileAccessor.onDelete(this.onFileDeleted);
   }
@@ -125,6 +130,25 @@ class FileBrowser extends React.Component {
     FileAccessor.delete(file.filename, this.state.fileMode, this[`list${_.string.capitalize(this.state.fileMode)}`]);
   }
 
+  saveManuscript() {
+    if (this.state.fileMode !== "manuscript") return;
+
+    FileAccessor.saveManuscript(this.state.files);
+  }
+
+  // Reorder a file in the list
+  moveFile(draggedItem, targetItem) {
+    let files = _.clone(this.state.files)
+
+    let draggedItemIndex = files.indexOf(draggedItem)
+    let targetItemIndex = files.indexOf(targetItem)
+
+
+    files.splice(draggedItemIndex, 1);
+    files.splice(targetItemIndex, 0, draggedItem);
+    this.setState({ files: files });
+  }
+
   renderFileCreator() {
     if (!this.state.creatingFile) return;
 
@@ -146,6 +170,8 @@ class FileBrowser extends React.Component {
             _.map(this.state.files, (file, i) => {
               return (
                 <FileBrowserListItem
+                  saveManuscript={this.saveManuscript}
+                  moveFile={this.moveFile}
                   key={i}
                   fileMode={this.state.fileMode}
                   onDeleteFile={this.onDeleteFile}
@@ -187,4 +213,4 @@ FileBrowser.propTypes = {
   currentFile: React.PropTypes.string.isRequired
 };
 
-export default FileBrowser;
+export default DragDropContext(HTML5Backend)(FileBrowser);

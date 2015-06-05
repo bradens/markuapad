@@ -28,6 +28,10 @@ class FileAccessor {
     this.fileAccessorDelegate.save(...arguments);
   }
 
+  saveManuscript() {
+    this.fileAccessorDelegate.saveManuscript(...arguments);
+  }
+
   new() {
     this.fileAccessorDelegate.new(...arguments);
   }
@@ -47,6 +51,10 @@ class FileAccessor {
   // Events
   onDelete() {
     this.fileAccessorDelegate.onDelete(...arguments);
+  }
+
+  onManuscriptChange() {
+    this.fileAccessorDelegate.onManuscriptChange(...arguments);
   }
 
   onAdd() {

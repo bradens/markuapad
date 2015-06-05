@@ -28,11 +28,13 @@ class Main extends React.Component {
     this.toggleLiveMode = this.toggleLiveMode.bind(this);
     this.onBookContentChanged = this.onBookContentChanged.bind(this);
     this.getWorkspaceClass = this.getWorkspaceClass.bind(this);
-    this.onFileDeleted = this.onFileDeleted.bind(this);
+    this.onManuscriptChange = this.onManuscriptChange.bind(this);
     this.onFileAdded = this.onFileAdded.bind(this);
 
+
     // File access hooks
-    FileAccessor.onDelete(this.onFileDeleted);
+    FileAccessor.onDelete(this.onManuscriptChange);
+    FileAccessor.onManuscriptChange(this.onManuscriptChange);
     FileAccessor.onAdd(this.onFileAdded);
   }
 
@@ -47,7 +49,7 @@ class Main extends React.Component {
     this.setState({ currentFile: file });
   }
 
-  onFileDeleted(file) {
+  onManuscriptChange() {
     // Re-preview
     if (this.state.inLiveMode)
       this.onGeneratePreview();
