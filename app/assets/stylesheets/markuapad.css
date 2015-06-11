@@ -561,6 +561,12 @@ html {
   .markuapad .preview .content {
     margin-top: 4em; }
 
+.markuapad .live-preview .content em,
+.markuapad .live-preview .content i,
+.markuapad .preview .content em,
+.markuapad .preview .content i {
+  font-style: italic; }
+
 .markuapad .live-preview .content,
 .markuapad .live-preview .content h1,
 .markuapad .live-preview .content h2,
@@ -618,6 +624,121 @@ html {
       .workspace.live .live-preview .content {
         margin-left: initial; }
 
+.markuapad .modal label {
+  cursor: pointer;
+  margin-bottom: 0; }
+  .markuapad .modal label img {
+    border-radius: 150px;
+    display: block;
+    max-width: 300px; }
+
+.markuapad .modal .modal-state {
+  display: none; }
+
+.markuapad .modal .modal-trigger {
+  padding: 0.8em 1em; }
+
+.markuapad .modal .modal-fade-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.85);
+  opacity: 1;
+  padding-top: .6em;
+  text-align: left;
+  visibility: visible;
+  z-index: 99999999999; }
+  @media screen and (min-width: 53.75em) {
+    .markuapad .modal .modal-fade-screen {
+      padding-top: 10em; } }
+  .markuapad .modal .modal-fade-screen .modal-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: pointer; }
+
+.markuapad .modal .modal-close {
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
+  height: 1.5em;
+  width: 1.5em;
+  background: #fff;
+  cursor: pointer; }
+  .markuapad .modal .modal-close:after,
+  .markuapad .modal .modal-close:before {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    height: 1.5em;
+    width: 0.15em;
+    background: #ddd;
+    content: '';
+    display: block;
+    margin: -3px 0 0 -1px; }
+  .markuapad .modal .modal-close:hover:after,
+  .markuapad .modal .modal-close:hover:before {
+    background: #c4c4c4; }
+  .markuapad .modal .modal-close:before {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
+
+.markuapad .modal .modal-inner {
+  background: #fff;
+  border-radius: 3px;
+  margin: auto;
+  margin-top: 0;
+  max-height: 95%;
+  overflow: auto;
+  padding: 1.5em;
+  position: relative;
+  top: .5em;
+  width: 95%; }
+  @media screen and (min-width: 40em) {
+    .markuapad .modal .modal-inner {
+      max-height: 70%;
+      padding: 3em;
+      width: 60%; } }
+  @media screen and (min-width: 53.75em) {
+    .markuapad .modal .modal-inner {
+      width: 50%; } }
+  .markuapad .modal .modal-inner h1 {
+    color: #333;
+    margin-bottom: 0 0 0.6em 0;
+    text-align: left;
+    text-transform: capitalize; }
+  .markuapad .modal .modal-inner p {
+    color: #333;
+    line-height: 1.5; }
+  .markuapad .modal .modal-inner .modal-intro {
+    font-weight: 800; }
+  .markuapad .modal .modal-inner .modal-content {
+    color: #333; }
+  .markuapad .modal .modal-inner .cta {
+    color: #fff;
+    display: inline-block;
+    margin-right: .5em;
+    margin-top: 1em; }
+    .markuapad .modal .modal-inner .cta:last-child {
+      padding: 0 2em; }
+
+.markuapad .modal-open {
+  overflow: hidden; }
+
 .markuapad {
   display: -webkit-box;
   display: -moz-box;
@@ -630,6 +751,8 @@ html {
   -moz-flex-flow: column nowrap;
   flex-flow: column nowrap;
   height: 100%; }
+  .markuapad a:hover {
+    text-decoration: none; }
   .markuapad h1 {
     font-size: 2.25em; }
   .markuapad h2 {

@@ -32,6 +32,10 @@ class FileAccessor {
     this.fileAccessorDelegate.saveManuscript(...arguments);
   }
 
+  newImage() {
+    this.fileAccessorDelegate.newImage(...arguments);
+  }
+
   new() {
     this.fileAccessorDelegate.new(...arguments);
   }
@@ -59,6 +63,10 @@ class FileAccessor {
 
   onAdd() {
     this.fileAccessorDelegate.onAdd(...arguments);
+  }
+
+  supportsImageUploads() {
+    return this.fileAccessorDelegate.supportsImageUploads;
   }
 }
 

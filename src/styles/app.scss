@@ -27,11 +27,14 @@
 @import "file_browser";
 @import "preview";
 @import "workspace";
+@import "modal";
 
 .markuapad {
   @include display(flex);
   @include flex-flow(column nowrap);
   height: 100%;
+
+  a:hover { text-decoration: none; }
 
   h1 { font-size: $h1-font-size; }
   h2 { font-size: $h2-font-size; }

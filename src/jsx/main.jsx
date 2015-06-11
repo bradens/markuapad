@@ -6,6 +6,7 @@ import FileBrowser from "./file_browser";
 import Preview from "./preview";
 import LivePreview from "./live_preview";
 import FileAccessor from "../file_accessor";
+import ImageModal from "./image_modal";
 import _ from "underscore";
 
 class Main extends React.Component {
@@ -15,6 +16,7 @@ class Main extends React.Component {
     // Setup some initial state
     this.state = {
       currentFile: null,
+      imageFile: null,
       previewState: 'closed',
       inLiveMode: true,
       previewHtml: ""
@@ -30,7 +32,7 @@ class Main extends React.Component {
     this.getWorkspaceClass = this.getWorkspaceClass.bind(this);
     this.onManuscriptChange = this.onManuscriptChange.bind(this);
     this.onFileAdded = this.onFileAdded.bind(this);
-
+    this.onPreviewImage = this.onPreviewImage.bind(this);
 
     // File access hooks
     FileAccessor.onDelete(this.onManuscriptChange);
@@ -53,6 +55,10 @@ class Main extends React.Component {
     // Re-preview
     if (this.state.inLiveMode)
       this.onGeneratePreview();
+  }
+
+  onPreviewImage(file) {
+    this.setState({ imageFile: file });
   }
 
   onChangeFile(file) {
@@ -109,7 +115,7 @@ class Main extends React.Component {
         />
         <section className="main-view">
           <section className={this.getWorkspaceClass()}>
-            <FileBrowser onChangeFile={this.onChangeFile} currentFile={this.state.currentFile} projectRoot={this.props.projectRoot }/>
+            <FileBrowser onPreviewImage={this.onPreviewImage} onChangeFile={this.onChangeFile} currentFile={this.state.currentFile} projectRoot={this.props.projectRoot }/>
             <Editor
               onBookContentChanged={this.onBookContentChanged}
               inLiveMode={this.state.inLiveMode}
@@ -119,6 +125,7 @@ class Main extends React.Component {
           </section>
         </section>
         { this.state.inLiveMode ? <span /> : <Preview key='preview' onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> }
+        { this.state.imageFile ? <ImageModal file={this.state.imageFile} onClose={ _.partial(this.onPreviewImage, null) } /> : null }
       </section>
     );
   }

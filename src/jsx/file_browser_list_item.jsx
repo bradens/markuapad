@@ -43,7 +43,10 @@ export default class FileBrowserListItem {
   }
 
   onChange(e) {
-    this.props.onChangeFile(this.props.file)
+    if (this.props.file.type === "image")
+      this.props.onPreviewImage(this.props.file)
+    else
+      this.props.onChangeFile(this.props.file)
   }
 
   getFileIconClass() {
@@ -78,5 +81,6 @@ FileBrowserListItem.propTypes = {
   saveManuscript: React.PropTypes.func.isRequired,
   isCurrent: React.PropTypes.bool.isRequired,
   onDeleteFile: React.PropTypes.func.isRequired,
-  onChangeFile: React.PropTypes.func.isRequired
+  onChangeFile: React.PropTypes.func.isRequired,
+  onPreviewImage: React.PropTypes.func.isRequired
 }

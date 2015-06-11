@@ -8,7 +8,7 @@
   right: 0;
   top: 100%;
   z-index: 10;
-  overflow: auto; 
+  overflow: auto;
 
   // Preview states
   &.closed {
@@ -44,9 +44,12 @@
 .markuapad .preview {
   // main content
   .content {
-
+    em,
+    i,
+    {
+      font-style: italic;
+    }
     ul { @extend %default-ul; }
-
     ol { @extend %default-ol; }
 
     &,

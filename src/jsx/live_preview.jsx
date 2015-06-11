@@ -1,4 +1,5 @@
 import React from "react";
+import { fixImagePaths } from "../util"
 
 class LivePreview extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class LivePreview extends React.Component {
         <section className="previewErrors">
           { this.props.previewErrors }
         </section>
-        <div dangerouslySetInnerHTML={{ __html: this.props.html }} className="container content" />
+        <div dangerouslySetInnerHTML={{ __html: fixImagePaths(this.props.html, this.forceUpdate.bind(this)) }} className="container content" />
       </section>
     );
   }

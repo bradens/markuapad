@@ -64,6 +64,7 @@ class ExampleFileAccessor {
     this.manifestFilesKey = `${this.projectRoot}/manifest_files`;
     this.manifestCodeKey = `${this.projectRoot}/manifest_code`;
     this.manifestImagesKey = `${this.projectRoot}/manifest_images`;
+    this.supportsImageUploads = true;
   }
 
   getFilePrefix(type) {
@@ -71,6 +72,8 @@ class ExampleFileAccessor {
       return this.manifestFilesKey;
     else if (type === "code")
       return this.manifestCodeKey;
+    else if (type === "image")
+      return this.manifestImagesKey;
     else
       return this.projectRoot;
   }
@@ -91,7 +94,7 @@ class ExampleFileAccessor {
   }
 
   listImages(cb = noop) {
-    let files = _.map(getCached(this.manifestImagesKey), (f) => { return _.extend(f, { type: "images" }); });
+    let files = _.map(getCached(this.manifestImagesKey), (f) => { return _.extend(f, { type: "image" }); });
     cb(null, files ? _.map(files, function(file) { return _.omit(file, "content"); }) : []);
   }
 
@@ -123,6 +126,10 @@ class ExampleFileAccessor {
     cb(null);
   }
 
+  newImage(fileNode, cb = noop) {
+    cb("Images uploads don't work on markuapad.com")
+  }
+
   new(filename, type = "manuscript", content = "", cb = noop) {
     let file = { filename: filename, content: content, type: type }
     let filePath = `${this.getFilePrefix(type)}/${filename}`;
@@ -135,7 +142,7 @@ class ExampleFileAccessor {
     // when updating manuscript, make sure to update the book.txt
     if (type === "manuscript") setCached(`${this.projectRoot}/book.txt`, { filename: "book.txt", content: _.map(manifestFiles, (f) => { return f.filename }).join("\n")});
 
-    cb(null);
+    cb(null, file);
 
     // Fire stored callbacks
     for (let callback of this.onAddCallbacks)
@@ -143,7 +150,14 @@ class ExampleFileAccessor {
   }
 
   delete(filename, type = "manuscript", cb = noop) {
-    let manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey
+    let manifestKey;
+    if (type === "manuscript")
+      manifestKey = this.manifestFilesKey
+    else if (type === "image")
+      manifestKey = this.manifestImagesKey
+    else
+      manifestKey = this.manifestCodeKey
+
     let files = getCached(manifestKey);
     let filePath = `${this.getFilePrefix(type)}/${filename}`;
 

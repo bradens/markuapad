@@ -51,7 +51,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	__webpack_require__(368);
+	__webpack_require__(370);
 
 	var _ = __webpack_require__(2);
 
@@ -149,12 +149,13 @@
 	    this.manifestFilesKey = "" + this.projectRoot + "/manifest_files";
 	    this.manifestCodeKey = "" + this.projectRoot + "/manifest_code";
 	    this.manifestImagesKey = "" + this.projectRoot + "/manifest_images";
+	    this.supportsImageUploads = true;
 	  }
 
 	  _createClass(ExampleFileAccessor, [{
 	    key: "getFilePrefix",
 	    value: function getFilePrefix(type) {
-	      if (type === "manuscript") return this.manifestFilesKey;else if (type === "code") return this.manifestCodeKey;else return this.projectRoot;
+	      if (type === "manuscript") return this.manifestFilesKey;else if (type === "code") return this.manifestCodeKey;else if (type === "image") return this.manifestImagesKey;else return this.projectRoot;
 	    }
 	  }, {
 	    key: "get",
@@ -189,7 +190,7 @@
 	      var cb = arguments[0] === undefined ? noop : arguments[0];
 
 	      var files = _.map(getCached(this.manifestImagesKey), function (f) {
-	        return _.extend(f, { type: "images" });
+	        return _.extend(f, { type: "image" });
 	      });
 	      cb(null, files ? _.map(files, function (file) {
 	        return _.omit(file, "content");
@@ -263,6 +264,13 @@
 	      cb(null);
 	    }
 	  }, {
+	    key: "newImage",
+	    value: function newImage(fileNode) {
+	      var cb = arguments[1] === undefined ? noop : arguments[1];
+
+	      cb("Images uploads don't work on markuapad.com");
+	    }
+	  }, {
 	    key: "new",
 	    value: function _new(filename) {
 	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
@@ -282,7 +290,7 @@
 	          return f.filename;
 	        }).join("\n") });
 
-	      cb(null);
+	      cb(null, file);
 
 	      // Fire stored callbacks
 	      var _iteratorNormalCompletion4 = true;
@@ -316,7 +324,9 @@
 	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
 	      var cb = arguments[2] === undefined ? noop : arguments[2];
 
-	      var manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey;
+	      var manifestKey = undefined;
+	      if (type === "manuscript") manifestKey = this.manifestFilesKey;else if (type === "image") manifestKey = this.manifestImagesKey;else manifestKey = this.manifestCodeKey;
+
 	      var files = getCached(manifestKey);
 	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
 
@@ -1947,7 +1957,7 @@
 
 /***/ },
 
-/***/ 368:
+/***/ 370:
 /***/ function(module, exports, __webpack_require__) {
 
 	// removed by extract-text-webpack-plugin
