@@ -2,7 +2,7 @@
   "name": "markuapad",
   "version": "1.0.0",
   "description": "A web app to write markua documents.",
-  "main": "build/markuapad.js",
+  "main": "build/dist.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ruboss/markuapad"
