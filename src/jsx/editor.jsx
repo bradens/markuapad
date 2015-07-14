@@ -12,7 +12,8 @@ class Editor extends React.Component {
     this.onCurrentFileLoaded = this.onCurrentFileLoaded.bind(this);
 
     // Make the editor changed function not spammy
-    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 50);
+    this.onEditorChanged = _.debounce(this.onEditorChanged.bind(this), 300);
+    this.onCursorChanged = this.onCursorChanged.bind(this)
   }
 
   // Setup all the editor options when we mount.
@@ -47,9 +48,21 @@ class Editor extends React.Component {
 
     // When the editor changes, alert us
     this.editor.on("change", this.onEditorChanged)
+    this.editor.getSession().selection.on("changeCursor", this.onCursorChanged)
 
     // Get the current file to put in the ace editor
     FileAccessor.get(this.props.currentFile.filename, this.onCurrentFileLoaded, this.props.currentFile.type);
+  }
+
+  // When someone changes the cursor, we need to tell the file that we have a changed cursor
+  onCursorChanged() {
+    let count = 0,
+        position = this.editor.getCursorPosition(),
+        i = 0,
+        src = this.editor.getValue();
+
+    while(count < position.row && (i = src.indexOf('\n', i) + 1)) { count++; }
+    FileAccessor.setCursor(this.props.currentFile.filename, i);
   }
 
   // When the editor value changes, then we have to set our current state,

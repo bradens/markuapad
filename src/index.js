@@ -1,28 +1,10 @@
 require("./styles/index.scss");
 
+import { setCached, getCached } from "./util"
+
 let _ = require("underscore");
 
 let noop = () => {};
-
-// Helpers for the localstorage manipulation
-let getCached = (key, defaultValue) => {
-  let value;
-  if (value = localStorage.getItem(key))
-    try {
-      value = JSON.parse(value);
-      return value
-    }
-    catch(error) {
-      return value;
-    }
-  else
-    return defaultValue;
-}
-
-let setCached = (key, value) => {
-  localStorage.setItem(key, (typeof value === "string" ? value : JSON.stringify(value)));
-  return value;
-}
 
 let INITIAL_FILES = [
   { filename: "my-first-markuapad-book/book.txt", content: "chapter1.txt\nchapter2.txt" },
@@ -176,6 +158,10 @@ class ExampleFileAccessor {
     // Fire stored callbacks
     for (let callback of this.onDeleteCallbacks)
       callback(filename);
+  }
+
+  setCursor(file, position) {
+    setCached("markuapad_cursor", { filename: file, position: position })
   }
 
   onAdd(cb = noop) {

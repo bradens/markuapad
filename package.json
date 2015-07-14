@@ -5,7 +5,7 @@
   "main": "build/dist.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ruboss/markuapad"
+    "url": "https://github.com/bradens/markuapad"
   },
   "keywords": [
     "markua",
@@ -17,9 +17,9 @@
   "author": "Braden Simpson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/markuadoc/markuapad/issues"
+    "url": "https://github.com/bradens/markuapad/issues"
   },
-  "homepage": "https://github.com/markuadoc/markuapad",
+  "homepage": "https://github.com/bradens/markuapad",
   "dependencies": {
     "ace": "0.0.2",
     "babel": "^5.1.11",
@@ -30,6 +30,7 @@
     "del": "^1.2.0",
     "extract-text-webpack-plugin": "^0.3.8",
     "file-loader": "^0.8.1",
+    "jquery": "^2.1.4",
     "jsx-loader": "^0.12.2",
     "markua-js": "git+ssh://git@github.com:markuadoc/markua-js",
     "react": "^0.13.1",

@@ -51,34 +51,20 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	__webpack_require__(370);
+	var _util = __webpack_require__(228);
+
+	__webpack_require__(372);
 
 	var _ = __webpack_require__(2);
 
 	var noop = function noop() {};
-
-	// Helpers for the localstorage manipulation
-	var getCached = function getCached(key, defaultValue) {
-	  var value = undefined;
-	  if (value = localStorage.getItem(key)) try {
-	    value = JSON.parse(value);
-	    return value;
-	  } catch (error) {
-	    return value;
-	  } else return defaultValue;
-	};
-
-	var setCached = function setCached(key, value) {
-	  localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
-	  return value;
-	};
 
 	var INITIAL_FILES = [{ filename: "my-first-markuapad-book/book.txt", content: "chapter1.txt\nchapter2.txt" }, { filename: "my-first-markuapad-book/manifest_files/chapter1.txt", in_sample: false, content: "#Chapter 1\n\nHere is the first chapter" }, { filename: "my-first-markuapad-book/manifest_files/chapter2.txt", in_sample: false, content: "#Chapter 2\n\nHere is the second chapter" }, { filename: "my-first-markuapad-book/manifest_code/sample.js", content: "function() {\n  console.log('Hello, World!');\n}\n" }];
 
 	var MANIFEST_FILES = [{ filename: "my-first-markuapad-book/manifest_files", files: [{ filename: "chapter1.txt" }, { filename: "chapter2.txt" }] }, { filename: "my-first-markuapad-book/manifest_code", files: [{ filename: "sample.js" }] }, { filename: "my-first-markuapad-book/manifest_images", files: [] }];
 
 	// Create our client side files for markuapad to work with.
-	if (!getCached("my-first-markuapad-book/manifest_files")) {
+	if (!(0, _util.getCached)("my-first-markuapad-book/manifest_files")) {
 	  var _iteratorNormalCompletion = true;
 	  var _didIteratorError = false;
 	  var _iteratorError = undefined;
@@ -89,7 +75,7 @@
 
 	      var initialFilename = file.filename;
 	      file.filename = file.filename.substr(file.filename.lastIndexOf("/") + 1);
-	      setCached(initialFilename, file);
+	      (0, _util.setCached)(initialFilename, file);
 	    }
 	  } catch (err) {
 	    _didIteratorError = true;
@@ -114,7 +100,7 @@
 	    for (var _iterator2 = MANIFEST_FILES[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	      var file = _step2.value;
 
-	      setCached(file.filename, file.files);
+	      (0, _util.setCached)(file.filename, file.files);
 	    }
 	  } catch (err) {
 	    _didIteratorError2 = true;
@@ -163,7 +149,7 @@
 	      var cb = arguments[1] === undefined ? noop : arguments[1];
 	      var type = arguments[2] === undefined ? "manuscript" : arguments[2];
 
-	      var file = getCached("" + this.getFilePrefix(type) + "/" + path);
+	      var file = (0, _util.getCached)("" + this.getFilePrefix(type) + "/" + path);
 	      cb(null, file && file.content);
 	    }
 	  }, {
@@ -171,7 +157,7 @@
 	    value: function getSync(path) {
 	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
 
-	      var file = getCached("" + this.getFilePrefix(type) + "/" + path);
+	      var file = (0, _util.getCached)("" + this.getFilePrefix(type) + "/" + path);
 	      return file && file.content;
 	    }
 	  }, {
@@ -179,7 +165,7 @@
 	    value: function listFiles() {
 	      var cb = arguments[0] === undefined ? noop : arguments[0];
 
-	      var files = _.map(getCached(this.manifestFilesKey), function (f) {
+	      var files = _.map((0, _util.getCached)(this.manifestFilesKey), function (f) {
 	        return _.extend(f, { type: "manuscript" });
 	      });
 	      cb(null, files);
@@ -189,7 +175,7 @@
 	    value: function listImages() {
 	      var cb = arguments[0] === undefined ? noop : arguments[0];
 
-	      var files = _.map(getCached(this.manifestImagesKey), function (f) {
+	      var files = _.map((0, _util.getCached)(this.manifestImagesKey), function (f) {
 	        return _.extend(f, { type: "image" });
 	      });
 	      cb(null, files ? _.map(files, function (file) {
@@ -201,7 +187,7 @@
 	    value: function listCode() {
 	      var cb = arguments[0] === undefined ? noop : arguments[0];
 
-	      var files = _.map(getCached(this.manifestCodeKey), function (f) {
+	      var files = _.map((0, _util.getCached)(this.manifestCodeKey), function (f) {
 	        return _.extend(f, { type: "code" });
 	      });
 	      cb(null, files ? _.map(files, function (file) {
@@ -219,10 +205,10 @@
 	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
 
 	      // Get the current version
-	      var file = getCached(filePath);
+	      var file = (0, _util.getCached)(filePath);
 	      file.content = content;
 
-	      setCached(filePath, file);
+	      (0, _util.setCached)(filePath, file);
 	      cb(null);
 	    }
 	  }, {
@@ -230,8 +216,8 @@
 	    value: function saveManuscript(files) {
 	      var cb = arguments[1] === undefined ? noop : arguments[1];
 
-	      setCached(this.manifestFilesKey, files);
-	      setCached("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
+	      (0, _util.setCached)(this.manifestFilesKey, files);
+	      (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -280,13 +266,13 @@
 	      var file = { filename: filename, content: content, type: type };
 	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
 	      var manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey;
-	      var manifestFiles = getCached(manifestKey).concat([_.omit(file, "content")]);
+	      var manifestFiles = (0, _util.getCached)(manifestKey).concat([_.omit(file, "content")]);
 
-	      setCached(filePath, file);
-	      setCached(manifestKey, manifestFiles);
+	      (0, _util.setCached)(filePath, file);
+	      (0, _util.setCached)(manifestKey, manifestFiles);
 
 	      // when updating manuscript, make sure to update the book.txt
-	      if (type === "manuscript") setCached("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(manifestFiles, function (f) {
+	      if (type === "manuscript") (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(manifestFiles, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -327,7 +313,7 @@
 	      var manifestKey = undefined;
 	      if (type === "manuscript") manifestKey = this.manifestFilesKey;else if (type === "image") manifestKey = this.manifestImagesKey;else manifestKey = this.manifestCodeKey;
 
-	      var files = getCached(manifestKey);
+	      var files = (0, _util.getCached)(manifestKey);
 	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
 
 	      // Remove the file
@@ -337,9 +323,9 @@
 	      files = _.reject(files, function (file) {
 	        return file.filename === filename;
 	      });
-	      setCached(manifestKey, files);
+	      (0, _util.setCached)(manifestKey, files);
 
-	      if (type === "manuscript") setCached("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
+	      if (type === "manuscript") (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -371,6 +357,11 @@
 	          }
 	        }
 	      }
+	    }
+	  }, {
+	    key: "setCursor",
+	    value: function setCursor(file, position) {
+	      (0, _util.setCached)("markuapad_cursor", { filename: file, position: position });
 	    }
 	  }, {
 	    key: "onAdd",
@@ -1957,7 +1948,233 @@
 
 /***/ },
 
-/***/ 370:
+/***/ 228:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _file_accessor = __webpack_require__(229);
+
+	var _file_accessor2 = _interopRequireDefault(_file_accessor);
+
+	var imageTagFixRegex = /src="images\/([\w,\s-]+\.(?:(?:png)|(?:jpg)|(?:jpeg)|(?:gif)|(?:bmp)))/;
+	var allImageTagFixRegex = new RegExp(imageTagFixRegex.source, "g");
+
+	var fixImagePaths = function fixImagePaths(htmlString, rerun) {
+	  var matches = htmlString.match(allImageTagFixRegex);
+
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = (matches || [])[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var match = _step.value;
+
+	      // Get the base64 url for the image
+	      var key = match.substr(match.lastIndexOf("/") + 1);
+	      var file = _file_accessor2["default"].getSync(key, "image", rerun);
+
+	      if (!file || !file.data) {
+	        _file_accessor2["default"].get(key, rerun, "image");
+	        continue;
+	      }
+
+	      var uri = "data:" + file.mimetype.string + ";base64," + file.data;
+	      htmlString = htmlString.replace(imageTagFixRegex, "src=\"" + uri);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator["return"]) {
+	        _iterator["return"]();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return htmlString;
+	};
+
+	exports.fixImagePaths = fixImagePaths;
+	// Helpers for the localstorage manipulation
+	var getCached = function getCached(key, defaultValue) {
+	  var value = undefined;
+	  if (value = localStorage.getItem(key)) try {
+	    value = JSON.parse(value);
+	    return value;
+	  } catch (error) {
+	    return value;
+	  } else return defaultValue;
+	};
+
+	exports.getCached = getCached;
+	var setCached = function setCached(key, value) {
+	  localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
+	  return value;
+	};
+	exports.setCached = setCached;
+
+/***/ },
+
+/***/ 229:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FileAccessor = (function () {
+	  function FileAccessor() {
+	    _classCallCheck(this, FileAccessor);
+
+	    // This is the way that the implementer has given us to access files
+	    this.fileAccessorDelegate = null;
+	  }
+
+	  _createClass(FileAccessor, [{
+	    key: "get",
+	    value: function get() {
+	      var _fileAccessorDelegate;
+
+	      (_fileAccessorDelegate = this.fileAccessorDelegate).get.apply(_fileAccessorDelegate, arguments);
+	    }
+	  }, {
+	    key: "getSync",
+	    value: function getSync() {
+	      var _fileAccessorDelegate2;
+
+	      return (_fileAccessorDelegate2 = this.fileAccessorDelegate).getSync.apply(_fileAccessorDelegate2, arguments);
+	    }
+	  }, {
+	    key: "listFiles",
+	    value: function listFiles() {
+	      var _fileAccessorDelegate3;
+
+	      (_fileAccessorDelegate3 = this.fileAccessorDelegate).listFiles.apply(_fileAccessorDelegate3, arguments);
+	    }
+	  }, {
+	    key: "listImages",
+	    value: function listImages() {
+	      var _fileAccessorDelegate4;
+
+	      (_fileAccessorDelegate4 = this.fileAccessorDelegate).listImages.apply(_fileAccessorDelegate4, arguments);
+	    }
+	  }, {
+	    key: "listCode",
+	    value: function listCode() {
+	      var _fileAccessorDelegate5;
+
+	      (_fileAccessorDelegate5 = this.fileAccessorDelegate).listCode.apply(_fileAccessorDelegate5, arguments);
+	    }
+	  }, {
+	    key: "save",
+	    value: function save() {
+	      var _fileAccessorDelegate6;
+
+	      (_fileAccessorDelegate6 = this.fileAccessorDelegate).save.apply(_fileAccessorDelegate6, arguments);
+	    }
+	  }, {
+	    key: "saveManuscript",
+	    value: function saveManuscript() {
+	      var _fileAccessorDelegate7;
+
+	      (_fileAccessorDelegate7 = this.fileAccessorDelegate).saveManuscript.apply(_fileAccessorDelegate7, arguments);
+	    }
+	  }, {
+	    key: "newImage",
+	    value: function newImage() {
+	      var _fileAccessorDelegate8;
+
+	      (_fileAccessorDelegate8 = this.fileAccessorDelegate).newImage.apply(_fileAccessorDelegate8, arguments);
+	    }
+	  }, {
+	    key: "new",
+	    value: function _new() {
+	      var _fileAccessorDelegate9;
+
+	      (_fileAccessorDelegate9 = this.fileAccessorDelegate)["new"].apply(_fileAccessorDelegate9, arguments);
+	    }
+	  }, {
+	    key: "delete",
+	    value: function _delete() {
+	      var _fileAccessorDelegate10;
+
+	      (_fileAccessorDelegate10 = this.fileAccessorDelegate)["delete"].apply(_fileAccessorDelegate10, arguments);
+	    }
+	  }, {
+	    key: "isSetup",
+	    value: function isSetup() {
+	      this.fileAccessorDelegate !== null;
+	    }
+	  }, {
+	    key: "setup",
+	    value: function setup(fileAccessor, projectRoot) {
+	      this.fileAccessorDelegate = new fileAccessor(projectRoot);
+	    }
+	  }, {
+	    key: "setCursor",
+	    value: function setCursor() {
+	      var _fileAccessorDelegate11;
+
+	      (_fileAccessorDelegate11 = this.fileAccessorDelegate).setCursor.apply(_fileAccessorDelegate11, arguments);
+	    }
+	  }, {
+	    key: "onDelete",
+
+	    // Events
+	    value: function onDelete() {
+	      var _fileAccessorDelegate12;
+
+	      (_fileAccessorDelegate12 = this.fileAccessorDelegate).onDelete.apply(_fileAccessorDelegate12, arguments);
+	    }
+	  }, {
+	    key: "onManuscriptChange",
+	    value: function onManuscriptChange() {
+	      var _fileAccessorDelegate13;
+
+	      (_fileAccessorDelegate13 = this.fileAccessorDelegate).onManuscriptChange.apply(_fileAccessorDelegate13, arguments);
+	    }
+	  }, {
+	    key: "onAdd",
+	    value: function onAdd() {
+	      var _fileAccessorDelegate14;
+
+	      (_fileAccessorDelegate14 = this.fileAccessorDelegate).onAdd.apply(_fileAccessorDelegate14, arguments);
+	    }
+	  }, {
+	    key: "supportsImageUploads",
+	    value: function supportsImageUploads() {
+	      return this.fileAccessorDelegate.supportsImageUploads;
+	    }
+	  }]);
+
+	  return FileAccessor;
+	})();
+
+	exports["default"] = new FileAccessor();
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 372:
 /***/ function(module, exports, __webpack_require__) {
 
 	// removed by extract-text-webpack-plugin

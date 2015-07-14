@@ -9,6 +9,8 @@ import FileAccessor from "../file_accessor";
 import ImageModal from "./image_modal";
 import _ from "underscore";
 
+import { getCached } from "../util"
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -71,13 +73,13 @@ class Main extends React.Component {
     if (this.state.previewState === "closed")
       return
 
-    this.setState({ previewHtml: html, previewState: "done", previewErrors: errors });
+    this.setState({ previewHtml: html, previewState: "done", previewErrors: errors })
   }
 
   onGeneratePreview(e) {
     // Call out to the markua processor
     this.setState({ previewState: "previewing" });
-    this.props.markua.run(this.onPreviewReady)
+    this.props.markua.run(this.onPreviewReady, { cursor: getCached("markuapad_cursor") })
   }
 
   onClosePreview(e) {
@@ -87,6 +89,8 @@ class Main extends React.Component {
   toggleLiveMode() {
     // Clear the preview state here as well, so we don't accidentally open a preview
     this.setState({ inLiveMode: !this.state.inLiveMode, previewState: "closed" }, () => {
+      window.dispatchEvent(new Event('resize'));
+
       // If we transition into live mode, then kick off an initial preview;
       if (this.state.inLiveMode)
         this.onGeneratePreview();
@@ -121,7 +125,7 @@ class Main extends React.Component {
               inLiveMode={this.state.inLiveMode}
               currentFile={this.state.currentFile}
             />
-            { this.state.inLiveMode ? <LivePreview key='live-mode' html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
+            { this.state.inLiveMode ? <LivePreview key='live-mode' ref="liveMode" html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
           </section>
         </section>
         { this.state.inLiveMode ? <span /> : <Preview key='preview' onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> }

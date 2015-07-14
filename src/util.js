@@ -21,3 +21,23 @@ export let fixImagePaths = (htmlString, rerun) => {
   }
   return htmlString;
 }
+
+// Helpers for the localstorage manipulation
+export let getCached = (key, defaultValue) => {
+  let value;
+  if (value = localStorage.getItem(key))
+    try {
+      value = JSON.parse(value);
+      return value
+    }
+    catch(error) {
+      return value;
+    }
+  else
+    return defaultValue;
+}
+
+export let setCached = (key, value) => {
+  localStorage.setItem(key, (typeof value === "string" ? value : JSON.stringify(value)));
+  return value;
+}

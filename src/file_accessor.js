@@ -52,6 +52,10 @@ class FileAccessor {
     this.fileAccessorDelegate = new fileAccessor(projectRoot);
   }
 
+  setCursor() {
+    this.fileAccessorDelegate.setCursor(...arguments);
+  }
+
   // Events
   onDelete() {
     this.fileAccessorDelegate.onDelete(...arguments);
