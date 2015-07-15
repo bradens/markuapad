@@ -1,10 +1,13 @@
 # Markuapad
 ### A web editor for creating markua documents.
 
-This project is a web editor currently in use at [markuapad.com](http://markuapad.com) and [leanpub.com](https://leanpub.com).
+This project is a web editor that is in use at [markuapad.com](http://markuapad.com) and will be integrated into  [leanpub.com](https://leanpub.com).
+
 It's used to create any document written in the [markua](https://leanpub.com/markua) format.
 
-It's written and maintained by [Braden Simpson](http://github.com/bradens), but we would love to have your pull requests :)
+This is the alpha release and is not yet close to stable.  Use at your own risk!
+
+It's written and maintained by [Braden Simpson](http://github.com/bradens), but we would love to have your pull requests :smile:
 
 ### Installation
 
