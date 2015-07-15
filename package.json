@@ -32,7 +32,7 @@
     "file-loader": "^0.8.1",
     "jquery": "^2.1.4",
     "jsx-loader": "^0.12.2",
-    "markua-js": "git+ssh://git@github.com:markuadoc/markua-js",
+    "markua-js": "markuadoc/markua-js",
     "react": "^0.13.1",
     "react-dnd": "^1.1.2",
     "react-hot-loader": "^1.2.5",

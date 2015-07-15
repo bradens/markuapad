@@ -33183,7 +33183,7 @@
 	    this.onCurrentFileLoaded = this.onCurrentFileLoaded.bind(this);
 
 	    // Make the editor changed function not spammy
-	    this.onEditorChanged = _underscore2["default"].debounce(this.onEditorChanged.bind(this), 300);
+	    this.onEditorChanged = _underscore2["default"].debounce(this.onEditorChanged.bind(this), 100);
 	    this.onCursorChanged = this.onCursorChanged.bind(this);
 	  }
 
@@ -64005,6 +64005,8 @@
 	  // Run the markua book generator on a given project path.
 
 	  function Markua(projectPath, options) {
+	    if (projectPath === undefined) projectPath = null;
+
 	    _classCallCheck(this, Markua);
 
 	    this.projectPath = projectPath;
@@ -64015,6 +64017,14 @@
 	  }
 
 	  _createClass(Markua, [{
+	    key: "runSource",
+	    value: function runSource(source, cb) {
+	      var runOptions = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	      this.options = _.extend(this.options, runOptions);
+	      this.processChapters([source], cb);
+	    }
+	  }, {
 	    key: "run",
 	    value: function run(cb) {
 	      var runOptions = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
@@ -64848,6 +64858,10 @@
 
 	var _ = __webpack_require__(2);
 
+	// Class used to parse the tokens created by the Lexer, then call out to the
+	// appropriate render method to ouput the html.  Could have different renderers
+	// plugged into it.
+
 	var Parser = (function () {
 	  function Parser() {
 	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -64864,7 +64878,7 @@
 	  _createClass(Parser, [{
 	    key: "parse",
 
-	    // Parse all the tokens
+	    // Parse all the tokens, one by one.
 	    value: function parse(src) {
 	      this.inline = new _inline_lexer2["default"](src.links, this.options);
 	      this.tokens = src.reverse();
@@ -64917,10 +64931,6 @@
 	        case "hr":
 	          {
 	            return this.renderer.hr(attributes);
-	          }
-	        case "cursor":
-	          {
-	            return this.renderer.cursor();
 	          }
 	        case "heading":
 	          {
@@ -65037,6 +65047,8 @@
 	    }
 	  }], [{
 	    key: "parse",
+
+	    // Static method to start parsing a token set
 	    value: function parse(src, options) {
 	      return new Parser(options).parse(src);
 	    }
@@ -65582,7 +65594,7 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -65613,6 +65625,11 @@
 	  }
 
 	  _createClass(NativeFileAccessor, [{
+	    key: "getFilePrefix",
+	    value: function getFilePrefix(type) {
+	      if (type === "code") return this.projectPath + "/code";else return this.projectPath;
+	    }
+	  }, {
 	    key: "get",
 
 	    // Override
@@ -65628,7 +65645,9 @@
 	    // This is required for the code block imports, maybe do the file retrieval in an async method as a pre
 	    // or post processing step
 	    value: function getSync(filePath) {
-	      return fs.readFileSync(path.join(this.projectPath, filePath), { encoding: "utf8" }).toString();
+	      var type = arguments.length <= 1 || arguments[1] === undefined ? "manuscript" : arguments[1];
+
+	      return fs.readFileSync(path.join(this.getFilePrefix(type), filePath), { encoding: "utf8" }).toString();
 	    }
 	  }]);
 
