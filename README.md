@@ -4,7 +4,7 @@
 This project is a web editor currently in use at [markuapad.com](http://markuapad.com) and [leanpub.com](https://leanpub.com).
 It's used to create any document written in the [markua](https://leanpub.com/markua) format.
 
-It's written and maintained by [Braden Simpson](http://github.com/bradens)
+It's written and maintained by [Braden Simpson](http://github.com/bradens), but we would love to have your pull requests :)
 
 ### Installation
 
