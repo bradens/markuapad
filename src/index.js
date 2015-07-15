@@ -8,8 +8,8 @@ let noop = () => {};
 
 let INITIAL_FILES = [
   { filename: "my-first-markuapad-book/book.txt", content: "chapter1.txt\nchapter2.txt" },
-  { filename: "my-first-markuapad-book/manifest_files/chapter1.txt", in_sample: false, content: "#Chapter 1\n\nHere is the first chapter" },
-  { filename: "my-first-markuapad-book/manifest_files/chapter2.txt", in_sample: false, content: "#Chapter 2\n\nHere is the second chapter" },
+  { filename: "my-first-markuapad-book/manifest_files/chapter1.txt", in_sample: false, content: "# Chapter 1\n\nHere is the first chapter" },
+  { filename: "my-first-markuapad-book/manifest_files/chapter2.txt", in_sample: false, content: "# Chapter 2\n\nHere is the second chapter" },
   { filename: "my-first-markuapad-book/manifest_code/sample.js", content: "function() {\n  console.log('Hello, World!');\n}\n" }
 ]
 
