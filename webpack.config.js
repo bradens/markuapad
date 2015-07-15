@@ -10,6 +10,18 @@ var commonLoaders = [
   { test: /\.scss?$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass') }
 ];
 
+var plugins = [
+  new ExtractTextPlugin('[name].css', {
+    allChunks: true
+  })
+];
+
+if (process.env.PROD) {
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  )
+}
+
 module.exports = {
     name: 'browser',
     entry: {
@@ -28,11 +40,7 @@ module.exports = {
     module: {
       loaders: commonLoaders
     },
-    plugins: [
-		  new ExtractTextPlugin('[name].css', {
-        allChunks: true
-      })
-		],
+    plugins: plugins,
     devServer: {
       contentBase: "./build",
       inline: true
