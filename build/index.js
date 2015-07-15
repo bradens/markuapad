@@ -53,7 +53,7 @@
 
 	var _util = __webpack_require__(228);
 
-	__webpack_require__(372);
+	__webpack_require__(371);
 
 	var _ = __webpack_require__(2);
 
@@ -132,9 +132,9 @@
 	    this.onAddCallbacks = [];
 	    this.onDeleteCallbacks = [];
 	    this.onManuscriptChangeCallbacks = [];
-	    this.manifestFilesKey = "" + this.projectRoot + "/manifest_files";
-	    this.manifestCodeKey = "" + this.projectRoot + "/manifest_code";
-	    this.manifestImagesKey = "" + this.projectRoot + "/manifest_images";
+	    this.manifestFilesKey = this.projectRoot + "/manifest_files";
+	    this.manifestCodeKey = this.projectRoot + "/manifest_code";
+	    this.manifestImagesKey = this.projectRoot + "/manifest_images";
 	    this.supportsImageUploads = true;
 	  }
 
@@ -146,24 +146,24 @@
 	  }, {
 	    key: "get",
 	    value: function get(path) {
-	      var cb = arguments[1] === undefined ? noop : arguments[1];
-	      var type = arguments[2] === undefined ? "manuscript" : arguments[2];
+	      var cb = arguments.length <= 1 || arguments[1] === undefined ? noop : arguments[1];
+	      var type = arguments.length <= 2 || arguments[2] === undefined ? "manuscript" : arguments[2];
 
-	      var file = (0, _util.getCached)("" + this.getFilePrefix(type) + "/" + path);
+	      var file = (0, _util.getCached)(this.getFilePrefix(type) + "/" + path);
 	      cb(null, file && file.content);
 	    }
 	  }, {
 	    key: "getSync",
 	    value: function getSync(path) {
-	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
+	      var type = arguments.length <= 1 || arguments[1] === undefined ? "manuscript" : arguments[1];
 
-	      var file = (0, _util.getCached)("" + this.getFilePrefix(type) + "/" + path);
+	      var file = (0, _util.getCached)(this.getFilePrefix(type) + "/" + path);
 	      return file && file.content;
 	    }
 	  }, {
 	    key: "listFiles",
 	    value: function listFiles() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      var files = _.map((0, _util.getCached)(this.manifestFilesKey), function (f) {
 	        return _.extend(f, { type: "manuscript" });
@@ -173,7 +173,7 @@
 	  }, {
 	    key: "listImages",
 	    value: function listImages() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      var files = _.map((0, _util.getCached)(this.manifestImagesKey), function (f) {
 	        return _.extend(f, { type: "image" });
@@ -185,7 +185,7 @@
 	  }, {
 	    key: "listCode",
 	    value: function listCode() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      var files = _.map((0, _util.getCached)(this.manifestCodeKey), function (f) {
 	        return _.extend(f, { type: "code" });
@@ -197,12 +197,12 @@
 	  }, {
 	    key: "save",
 	    value: function save(filename) {
-	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
-	      var content = arguments[2] === undefined ? "" : arguments[2];
-	      var cb = arguments[3] === undefined ? noop : arguments[3];
+	      var type = arguments.length <= 1 || arguments[1] === undefined ? "manuscript" : arguments[1];
+	      var content = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
+	      var cb = arguments.length <= 3 || arguments[3] === undefined ? noop : arguments[3];
 
 	      // Do we want a code sample or manuscript file
-	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
+	      var filePath = this.getFilePrefix(type) + "/" + filename;
 
 	      // Get the current version
 	      var file = (0, _util.getCached)(filePath);
@@ -214,10 +214,10 @@
 	  }, {
 	    key: "saveManuscript",
 	    value: function saveManuscript(files) {
-	      var cb = arguments[1] === undefined ? noop : arguments[1];
+	      var cb = arguments.length <= 1 || arguments[1] === undefined ? noop : arguments[1];
 
 	      (0, _util.setCached)(this.manifestFilesKey, files);
-	      (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
+	      (0, _util.setCached)(this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -252,19 +252,19 @@
 	  }, {
 	    key: "newImage",
 	    value: function newImage(fileNode) {
-	      var cb = arguments[1] === undefined ? noop : arguments[1];
+	      var cb = arguments.length <= 1 || arguments[1] === undefined ? noop : arguments[1];
 
 	      cb("Images uploads don't work on markuapad.com");
 	    }
 	  }, {
 	    key: "new",
 	    value: function _new(filename) {
-	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
-	      var content = arguments[2] === undefined ? "" : arguments[2];
-	      var cb = arguments[3] === undefined ? noop : arguments[3];
+	      var type = arguments.length <= 1 || arguments[1] === undefined ? "manuscript" : arguments[1];
+	      var content = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
+	      var cb = arguments.length <= 3 || arguments[3] === undefined ? noop : arguments[3];
 
 	      var file = { filename: filename, content: content, type: type };
-	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
+	      var filePath = this.getFilePrefix(type) + "/" + filename;
 	      var manifestKey = type === "manuscript" ? this.manifestFilesKey : this.manifestCodeKey;
 	      var manifestFiles = (0, _util.getCached)(manifestKey).concat([_.omit(file, "content")]);
 
@@ -272,7 +272,7 @@
 	      (0, _util.setCached)(manifestKey, manifestFiles);
 
 	      // when updating manuscript, make sure to update the book.txt
-	      if (type === "manuscript") (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(manifestFiles, function (f) {
+	      if (type === "manuscript") (0, _util.setCached)(this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(manifestFiles, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -307,14 +307,14 @@
 	  }, {
 	    key: "delete",
 	    value: function _delete(filename) {
-	      var type = arguments[1] === undefined ? "manuscript" : arguments[1];
-	      var cb = arguments[2] === undefined ? noop : arguments[2];
+	      var type = arguments.length <= 1 || arguments[1] === undefined ? "manuscript" : arguments[1];
+	      var cb = arguments.length <= 2 || arguments[2] === undefined ? noop : arguments[2];
 
 	      var manifestKey = undefined;
 	      if (type === "manuscript") manifestKey = this.manifestFilesKey;else if (type === "image") manifestKey = this.manifestImagesKey;else manifestKey = this.manifestCodeKey;
 
 	      var files = (0, _util.getCached)(manifestKey);
-	      var filePath = "" + this.getFilePrefix(type) + "/" + filename;
+	      var filePath = this.getFilePrefix(type) + "/" + filename;
 
 	      // Remove the file
 	      localStorage.removeItem(filePath);
@@ -325,7 +325,7 @@
 	      });
 	      (0, _util.setCached)(manifestKey, files);
 
-	      if (type === "manuscript") (0, _util.setCached)("" + this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
+	      if (type === "manuscript") (0, _util.setCached)(this.projectRoot + "/book.txt", { filename: "book.txt", content: _.map(files, function (f) {
 	          return f.filename;
 	        }).join("\n") });
 
@@ -366,21 +366,21 @@
 	  }, {
 	    key: "onAdd",
 	    value: function onAdd() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      this.onAddCallbacks.push(cb);
 	    }
 	  }, {
 	    key: "onDelete",
 	    value: function onDelete() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      this.onDeleteCallbacks.push(cb);
 	    }
 	  }, {
 	    key: "onManuscriptChange",
 	    value: function onManuscriptChange() {
-	      var cb = arguments[0] === undefined ? noop : arguments[0];
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      this.onManuscriptChangeCallbacks.push(cb);
 	    }
@@ -2029,7 +2029,7 @@
 /***/ },
 
 /***/ 229:
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	"use strict";
 
@@ -2174,8 +2174,8 @@
 
 /***/ },
 
-/***/ 372:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 371:
+/***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
