@@ -124,6 +124,7 @@ class Main extends React.Component {
               onBookContentChanged={this.onBookContentChanged}
               inLiveMode={this.state.inLiveMode}
               currentFile={this.state.currentFile}
+              CHANGED_INTERVAL={this.props.options.CHANGED_INTERVAL}
             />
             { this.state.inLiveMode ? <LivePreview key='live-mode' ref="liveMode" html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
           </section>

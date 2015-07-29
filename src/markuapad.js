@@ -10,7 +10,9 @@ import FileAccessor from "./file_accessor";
 
 _.string = _string;
 
-let DEFAULT_OPTIONS = {}
+let DEFAULT_OPTIONS = {
+  CHANGED_INTERVAL: 100
+}
 
 class Markuapad {
   constructor() {
