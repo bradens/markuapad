@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["braden@ruboss.com"]
 
   spec.summary       = %q{An app for writing markua based documents.}
-  spec.homepage      = "http://github.com/markuadoc/markuapad"
+  spec.homepage      = "http://github.com/bradens/markuapad"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
