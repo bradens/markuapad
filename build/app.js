@@ -93,7 +93,8 @@
 	_underscore2["default"].string = _underscoreString2["default"];
 
 	var DEFAULT_OPTIONS = {
-	  CHANGED_INTERVAL: 100
+	  CHANGED_INTERVAL: 100,
+	  enablePreview: true
 	};
 
 	var Markuapad = (function () {
@@ -3087,7 +3088,7 @@
 	      currentFile: null,
 	      imageFile: null,
 	      previewState: "closed",
-	      inLiveMode: true,
+	      inLiveMode: this.props.options.enablePreview,
 	      previewHtml: ""
 	    };
 
@@ -3114,8 +3115,8 @@
 
 	    // Lifecycle methods
 	    value: function componentDidMount() {
-	      // Trigger a preview right away -- since we start in live mode
-	      this.onGeneratePreview();
+	      // Trigger a preview right away if we are in live mode
+	      if (this.state.inLiveMode) this.onGeneratePreview();
 	    }
 	  }, {
 	    key: "onFileAdded",
@@ -3197,7 +3198,8 @@
 	          bookTitle: this.props.bookTitle,
 	          onGeneratePreview: this.onGeneratePreview,
 	          toggleLiveMode: this.toggleLiveMode,
-	          inLiveMode: this.state.inLiveMode
+	          inLiveMode: this.state.inLiveMode,
+	          enablePreview: this.props.options.enablePreview
 	        }),
 	        _react2["default"].createElement(
 	          "section",
@@ -3215,7 +3217,7 @@
 	            this.state.inLiveMode ? _react2["default"].createElement(_live_preview2["default"], { key: "live-mode", ref: "liveMode", html: this.state.previewHtml, previewState: this.state.previewState, previewErrors: this.state.previewErrors }) : null
 	          )
 	        ),
-	        this.state.inLiveMode ? _react2["default"].createElement("span", null) : _react2["default"].createElement(_preview2["default"], { key: "preview", onClosePreview: this.onClosePreview, html: this.state.previewHtml, previewState: this.state.previewState, previewErrors: this.state.previewErrors }),
+	        this.state.inLiveMode ? _react2["default"].createElement("span", null) : _react2["default"].createElement(_preview2["default"], { key: "preview", inLiveMode: this.state.inLiveMode, onClosePreview: this.onClosePreview, html: this.state.previewHtml, previewState: this.state.previewState, previewErrors: this.state.previewErrors }),
 	        this.state.imageFile ? _react2["default"].createElement(_image_modal2["default"], { file: this.state.imageFile, onClose: _underscore2["default"].partial(this.onPreviewImage, null) }) : null
 	      );
 	    }
@@ -55822,39 +55824,43 @@
 	  _createClass(Toolbar, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2["default"].createElement(
-	        "nav",
-	        { className: "toolbar" },
-	        _react2["default"].createElement(
-	          "h3",
-	          { className: "book-title" },
-	          this.props.bookTitle
-	        ),
-	        _react2["default"].createElement(
-	          "ul",
-	          { className: "actions" },
+	      if (this.props.enablePreview) {
+	        return _react2["default"].createElement(
+	          "nav",
+	          { className: "toolbar" },
 	          _react2["default"].createElement(
-	            "li",
-	            null,
-	            _react2["default"].createElement(
-	              "a",
-	              { className: this.props.inLiveMode ? "active" : "", onClick: this.props.toggleLiveMode },
-	              _react2["default"].createElement("i", { className: "fa fa-columns" }),
-	              " Live Mode"
-	            )
+	            "h3",
+	            { className: "book-title" },
+	            this.props.bookTitle
 	          ),
 	          _react2["default"].createElement(
-	            "li",
-	            null,
+	            "ul",
+	            { className: "actions" },
 	            _react2["default"].createElement(
-	              "a",
-	              { className: this.props.inLiveMode ? "disabled" : "", onClick: this.props.onGeneratePreview },
-	              _react2["default"].createElement("i", { className: "fa fa-play" }),
-	              " Preview"
+	              "li",
+	              null,
+	              _react2["default"].createElement(
+	                "a",
+	                { className: this.props.inLiveMode ? "active" : "", onClick: this.props.toggleLiveMode },
+	                _react2["default"].createElement("i", { className: "fa fa-columns" }),
+	                " Live Mode"
+	              )
+	            ),
+	            _react2["default"].createElement(
+	              "li",
+	              null,
+	              _react2["default"].createElement(
+	                "a",
+	                { className: this.props.inLiveMode ? "disabled" : "", onClick: this.props.onGeneratePreview },
+	                _react2["default"].createElement("i", { className: "fa fa-play" }),
+	                " Preview"
+	              )
 	            )
 	          )
-	        )
-	      );
+	        );
+	      } else {
+	        return _react2["default"].createElement("span", null);
+	      }
 	    }
 	  }]);
 
@@ -55862,6 +55868,7 @@
 	})(_react2["default"].Component);
 
 	Toolbar.propTypes = {
+	  enablePreview: _react2["default"].PropTypes.bool.isRequired,
 	  inLiveMode: _react2["default"].PropTypes.bool.isRequired,
 	  toggleLiveMode: _react2["default"].PropTypes.func.isRequired,
 	  onGeneratePreview: _react2["default"].PropTypes.func.isRequired,
@@ -55975,7 +55982,7 @@
 	  }, {
 	    key: "listManuscript",
 
-	    // List what files we have
+	    // List what text files we have
 	    value: function listManuscript() {
 	      var _this = this;
 
@@ -55990,7 +55997,7 @@
 	  }, {
 	    key: "listImage",
 
-	    // List what files we have
+	    // List what image files we have
 	    value: function listImage() {
 	      var _this2 = this;
 
@@ -56005,7 +56012,7 @@
 	  }, {
 	    key: "listCode",
 
-	    // List what files we have
+	    // List what code files we have
 	    value: function listCode() {
 	      var _this3 = this;
 
@@ -56255,7 +56262,7 @@
 	FileBrowser.propTypes = {
 	  projectRoot: _react2["default"].PropTypes.string.isRequired,
 	  onChangeFile: _react2["default"].PropTypes.func.isRequired,
-	  currentFile: _react2["default"].PropTypes.string.isRequired
+	  currentFile: _react2["default"].PropTypes.string
 	};
 
 	exports["default"] = (0, _reactDnd.DragDropContext)(_reactDndModulesBackendsHTML52["default"])(FileBrowser);
@@ -63843,7 +63850,6 @@
 	})(_react2["default"].Component);
 
 	Preview.propTypes = {
-	  inLiveMode: _react2["default"].PropTypes.bool.isRequired,
 	  onClosePreview: _react2["default"].PropTypes.func.isRequired,
 	  html: _react2["default"].PropTypes.string.isRequired,
 	  previewState: _react2["default"].PropTypes.string.isRequired,
