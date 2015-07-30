@@ -18,6 +18,7 @@ You can use this project by including it in your package.json, then including th
 
 #### Ensure that you have webpack installed
 `npm install -g webpack`
+`npm install webpack-dev-server -g`
 
 #### Get the code
 Run the following:
