@@ -53,7 +53,7 @@ class FileBrowser extends React.Component {
     this.props.onChangeFile(this.state.files[0])
   }
 
-  // List what files we have
+  // List what text files we have
   listManuscript() {
     this.busy(true);
     FileAccessor.listFiles((error, files) => {
@@ -66,7 +66,7 @@ class FileBrowser extends React.Component {
     });
   }
 
-  // List what files we have
+  // List what image files we have
   listImage() {
     this.busy(true);
     FileAccessor.listImages((error, files) => {
@@ -79,7 +79,7 @@ class FileBrowser extends React.Component {
     });
   }
 
-  // List what files we have
+  // List what code files we have
   listCode() {
     this.busy(true);
     FileAccessor.listCode((error, files) => {

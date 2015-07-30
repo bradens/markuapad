@@ -20,7 +20,7 @@ class Main extends React.Component {
       currentFile: null,
       imageFile: null,
       previewState: 'closed',
-      inLiveMode: true,
+      inLiveMode: this.props.options.enablePreview,
       previewHtml: ""
     }
 
@@ -44,8 +44,9 @@ class Main extends React.Component {
 
   // Lifecycle methods
   componentDidMount() {
-    // Trigger a preview right away -- since we start in live mode
-    this.onGeneratePreview();
+    // Trigger a preview right away if we are in live mode
+    if (this.state.inLiveMode)
+      this.onGeneratePreview();
   }
 
   // File event operations
@@ -116,6 +117,7 @@ class Main extends React.Component {
           onGeneratePreview={this.onGeneratePreview}
           toggleLiveMode={this.toggleLiveMode}
           inLiveMode={this.state.inLiveMode}
+          enablePreview={this.props.options.enablePreview}
         />
         <section className="main-view">
           <section className={this.getWorkspaceClass()}>
@@ -129,7 +131,7 @@ class Main extends React.Component {
             { this.state.inLiveMode ? <LivePreview key='live-mode' ref="liveMode" html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> : null }
           </section>
         </section>
-        { this.state.inLiveMode ? <span /> : <Preview key='preview' onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> }
+        { this.state.inLiveMode ? <span /> : <Preview key='preview' inLiveMode={this.state.inLiveMode} onClosePreview={this.onClosePreview} html={this.state.previewHtml} previewState={this.state.previewState} previewErrors={this.state.previewErrors} /> }
         { this.state.imageFile ? <ImageModal file={this.state.imageFile} onClose={ _.partial(this.onPreviewImage, null) } /> : null }
       </section>
     );
