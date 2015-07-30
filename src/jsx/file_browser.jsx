@@ -246,7 +246,7 @@ class FileBrowser extends React.Component {
 FileBrowser.propTypes = {
   projectRoot: React.PropTypes.string.isRequired,
   onChangeFile: React.PropTypes.func.isRequired,
-  currentFile: React.PropTypes.string.isRequired
+  currentFile: React.PropTypes.string
 };
 
 export default DragDropContext(HTML5Backend)(FileBrowser);

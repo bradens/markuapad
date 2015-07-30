@@ -22,7 +22,6 @@ class Preview extends React.Component {
 }
 
 Preview.propTypes = {
-  inLiveMode: React.PropTypes.bool.isRequired,
   onClosePreview: React.PropTypes.func.isRequired,
   html: React.PropTypes.string.isRequired,
   previewState: React.PropTypes.string.isRequired,
