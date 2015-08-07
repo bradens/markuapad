@@ -43,6 +43,8 @@ class ExampleFileAccessor {
     this.onAddCallbacks = [];
     this.onDeleteCallbacks = [];
     this.onManuscriptChangeCallbacks = [];
+    this.onProgressStartedCallbacks = [];
+    this.onProgressCallbacks = [];
     this.manifestFilesKey = `${this.projectRoot}/manifest_files`;
     this.manifestCodeKey = `${this.projectRoot}/manifest_code`;
     this.manifestImagesKey = `${this.projectRoot}/manifest_images`;
@@ -174,6 +176,14 @@ class ExampleFileAccessor {
 
   onManuscriptChange(cb = noop) {
     this.onManuscriptChangeCallbacks.push(cb);
+  }
+
+  onProgress(cb = noop) {
+    this.onProgressCallbacks.push(cb);
+  }
+
+  onProgressStarted(cb = noop) {
+    this.onProgressStartedCallbacks.push(cb);
   }
 }
 

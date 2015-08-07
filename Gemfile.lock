@@ -1,0 +1,20 @@
+PATH
+  remote: .
+  specs:
+    markuapad (0.2.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (10.4.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.9)
+  markuapad!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.10.5

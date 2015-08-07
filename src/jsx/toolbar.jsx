@@ -1,27 +1,41 @@
 import React from "react";
 
+let PROGRESS_TYPE_MAP = {
+  'manuscript_update': 'Manuscript Updated.',
+  'file_save': 'Saved.',
+  'image_create': 'Image Created.',
+  'file_delete': 'File Deleted'
+}
+
 class Toolbar extends React.Component {
   render() {
-    if (this.props.enablePreview) {
-      return (
-        <nav className="toolbar">
-          <h3 className="book-title">{ this.props.bookTitle}</h3>
-          <ul className="actions">
-            <li><a className={this.props.inLiveMode ? 'active' : '' } onClick={this.props.toggleLiveMode}><i className="fa fa-columns"></i> Live Mode</a></li>
-            <li><a className={this.props.inLiveMode ? 'disabled' : ''} onClick={this.props.onGeneratePreview}><i className="fa fa-play"></i> Preview</a></li>
-          </ul>
-        </nav>
-      );
-    } else {
-      return (
-        <span />
-      );
-    }
+    return (
+      <nav className="toolbar">
+        <h3 className="book-title">{ this.props.bookTitle}</h3>
+        <ul className="actions">
+          <li>
+            <a className={`progressMessage ${this.props.inProgress ? 'active' : ''}`}>
+              { this.props.inProgress ? <i className="fa fa-refresh fa-spin"></i> : null } { PROGRESS_TYPE_MAP[this.props.progressType] || 'Working...' }
+            </a>
+          </li>
+          {
+            this.props.enablePreview  ?
+              [
+                <li key="toggleLive"><a className={this.props.inLiveMode ? 'active' : '' } onClick={this.props.toggleLiveMode}><i className="fa fa-columns"></i> Live Mode</a></li>,
+                <li key="preview"><a className={this.props.inLiveMode ? 'disabled' : '' } onClick={this.props.onGeneratePreview}><i className="fa fa-play"></i> Preview</a></li>
+              ]
+            : null
+          }
+        </ul>
+      </nav>
+    );
   }
 }
 
 Toolbar.propTypes = {
   enablePreview: React.PropTypes.bool.isRequired,
+  inProgress: React.PropTypes.bool.isRequired,
+  progressType: React.PropTypes.string,
   inLiveMode: React.PropTypes.bool.isRequired,
   toggleLiveMode: React.PropTypes.func.isRequired,
   onGeneratePreview: React.PropTypes.func.isRequired,

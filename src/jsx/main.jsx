@@ -40,6 +40,8 @@ class Main extends React.Component {
     FileAccessor.onDelete(this.onManuscriptChange);
     FileAccessor.onManuscriptChange(this.onManuscriptChange);
     FileAccessor.onAdd(this.onFileAdded);
+    FileAccessor.onProgress(this.onProgress);
+    FileAccessor.onProgressStarted(this.onProgressStarted);
   }
 
   // Lifecycle methods
@@ -58,6 +60,20 @@ class Main extends React.Component {
     // Re-preview
     if (this.state.inLiveMode)
       this.onGeneratePreview();
+  }
+
+  onProgress = (progressType) => {
+    this.setState({ progressType: progressType, inProgress: false })
+
+    clearInterval(this.progressUpdateInterval)
+
+    this.progressUpdateInterval = setTimeout(() => {
+      this.setState({ progressType: null })
+    }, 1000)
+  }
+
+  onProgressStarted = () => {
+    this.setState({ inProgress: true })
   }
 
   onPreviewImage(file) {
@@ -113,6 +129,8 @@ class Main extends React.Component {
     return (
       <section className="markuapad">
         <Toolbar
+          inProgress={this.state.inProgress}
+          progressType={this.state.progressType}
           bookTitle={this.props.bookTitle}
           onGeneratePreview={this.onGeneratePreview}
           toggleLiveMode={this.toggleLiveMode}

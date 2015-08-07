@@ -3079,9 +3079,25 @@
 	  _inherits(Main, _React$Component);
 
 	  function Main(props) {
+	    var _this = this;
+
 	    _classCallCheck(this, Main);
 
 	    _get(Object.getPrototypeOf(Main.prototype), "constructor", this).call(this, props);
+
+	    this.onProgress = function (progressType) {
+	      _this.setState({ progressType: progressType, inProgress: false });
+
+	      clearInterval(_this.progressUpdateInterval);
+
+	      _this.progressUpdateInterval = setTimeout(function () {
+	        _this.setState({ progressType: null });
+	      }, 1000);
+	    };
+
+	    this.onProgressStarted = function () {
+	      _this.setState({ inProgress: true });
+	    };
 
 	    // Setup some initial state
 	    this.state = {
@@ -3108,6 +3124,8 @@
 	    _file_accessor2["default"].onDelete(this.onManuscriptChange);
 	    _file_accessor2["default"].onManuscriptChange(this.onManuscriptChange);
 	    _file_accessor2["default"].onAdd(this.onFileAdded);
+	    _file_accessor2["default"].onProgress(this.onProgress);
+	    _file_accessor2["default"].onProgressStarted(this.onProgressStarted);
 	  }
 
 	  _createClass(Main, [{
@@ -3166,14 +3184,14 @@
 	  }, {
 	    key: "toggleLiveMode",
 	    value: function toggleLiveMode() {
-	      var _this = this;
+	      var _this2 = this;
 
 	      // Clear the preview state here as well, so we don't accidentally open a preview
 	      this.setState({ inLiveMode: !this.state.inLiveMode, previewState: "closed" }, function () {
 	        window.dispatchEvent(new Event("resize"));
 
 	        // If we transition into live mode, then kick off an initial preview;
-	        if (_this.state.inLiveMode) _this.onGeneratePreview();
+	        if (_this2.state.inLiveMode) _this2.onGeneratePreview();
 	      });
 	    }
 	  }, {
@@ -3195,6 +3213,8 @@
 	        "section",
 	        { className: "markuapad" },
 	        _react2["default"].createElement(_toolbar2["default"], {
+	          inProgress: this.state.inProgress,
+	          progressType: this.state.progressType,
 	          bookTitle: this.props.bookTitle,
 	          onGeneratePreview: this.onGeneratePreview,
 	          toggleLiveMode: this.toggleLiveMode,
@@ -23900,6 +23920,20 @@
 	      var _fileAccessorDelegate14;
 
 	      (_fileAccessorDelegate14 = this.fileAccessorDelegate).onAdd.apply(_fileAccessorDelegate14, arguments);
+	    }
+	  }, {
+	    key: "onProgress",
+	    value: function onProgress() {
+	      var _fileAccessorDelegate15;
+
+	      (_fileAccessorDelegate15 = this.fileAccessorDelegate).onProgress.apply(_fileAccessorDelegate15, arguments);
+	    }
+	  }, {
+	    key: "onProgressStarted",
+	    value: function onProgressStarted() {
+	      var _fileAccessorDelegate16;
+
+	      (_fileAccessorDelegate16 = this.fileAccessorDelegate).onProgressStarted.apply(_fileAccessorDelegate16, arguments);
 	    }
 	  }, {
 	    key: "supportsImageUploads",
@@ -55792,25 +55826,32 @@
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(72);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var PROGRESS_TYPE_MAP = {
+	  'manuscript_update': 'Manuscript Updated.',
+	  'file_save': 'Saved.',
+	  'image_create': 'Image Created.',
+	  'file_delete': 'File Deleted'
+	};
 
 	var Toolbar = (function (_React$Component) {
 	  _inherits(Toolbar, _React$Component);
@@ -55818,65 +55859,73 @@
 	  function Toolbar() {
 	    _classCallCheck(this, Toolbar);
 
-	    _get(Object.getPrototypeOf(Toolbar.prototype), "constructor", this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(Toolbar.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
 	  _createClass(Toolbar, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
-	      if (this.props.enablePreview) {
-	        return _react2["default"].createElement(
-	          "nav",
-	          { className: "toolbar" },
-	          _react2["default"].createElement(
-	            "h3",
-	            { className: "book-title" },
-	            this.props.bookTitle
-	          ),
-	          _react2["default"].createElement(
-	            "ul",
-	            { className: "actions" },
-	            _react2["default"].createElement(
-	              "li",
-	              null,
-	              _react2["default"].createElement(
-	                "a",
-	                { className: this.props.inLiveMode ? "active" : "", onClick: this.props.toggleLiveMode },
-	                _react2["default"].createElement("i", { className: "fa fa-columns" }),
-	                " Live Mode"
-	              )
-	            ),
-	            _react2["default"].createElement(
-	              "li",
-	              null,
-	              _react2["default"].createElement(
-	                "a",
-	                { className: this.props.inLiveMode ? "disabled" : "", onClick: this.props.onGeneratePreview },
-	                _react2["default"].createElement("i", { className: "fa fa-play" }),
-	                " Preview"
-	              )
+	      return _react2['default'].createElement(
+	        'nav',
+	        { className: 'toolbar' },
+	        _react2['default'].createElement(
+	          'h3',
+	          { className: 'book-title' },
+	          this.props.bookTitle
+	        ),
+	        _react2['default'].createElement(
+	          'ul',
+	          { className: 'actions' },
+	          _react2['default'].createElement(
+	            'li',
+	            null,
+	            _react2['default'].createElement(
+	              'a',
+	              { className: 'progressMessage ' + (this.props.inProgress ? 'active' : '') },
+	              this.props.inProgress ? _react2['default'].createElement('i', { className: 'fa fa-refresh fa-spin' }) : null,
+	              ' ',
+	              PROGRESS_TYPE_MAP[this.props.progressType] || 'Working...'
 	            )
-	          )
-	        );
-	      } else {
-	        return _react2["default"].createElement("span", null);
-	      }
+	          ),
+	          this.props.enablePreview ? [_react2['default'].createElement(
+	            'li',
+	            { key: 'toggleLive' },
+	            _react2['default'].createElement(
+	              'a',
+	              { className: this.props.inLiveMode ? 'active' : '', onClick: this.props.toggleLiveMode },
+	              _react2['default'].createElement('i', { className: 'fa fa-columns' }),
+	              ' Live Mode'
+	            )
+	          ), _react2['default'].createElement(
+	            'li',
+	            { key: 'preview' },
+	            _react2['default'].createElement(
+	              'a',
+	              { className: this.props.inLiveMode ? 'disabled' : '', onClick: this.props.onGeneratePreview },
+	              _react2['default'].createElement('i', { className: 'fa fa-play' }),
+	              ' Preview'
+	            )
+	          )] : null
+	        )
+	      );
 	    }
 	  }]);
 
 	  return Toolbar;
-	})(_react2["default"].Component);
+	})(_react2['default'].Component);
 
 	Toolbar.propTypes = {
-	  enablePreview: _react2["default"].PropTypes.bool.isRequired,
-	  inLiveMode: _react2["default"].PropTypes.bool.isRequired,
-	  toggleLiveMode: _react2["default"].PropTypes.func.isRequired,
-	  onGeneratePreview: _react2["default"].PropTypes.func.isRequired,
-	  bookTitle: _react2["default"].PropTypes.string.isRequired
+	  enablePreview: _react2['default'].PropTypes.bool.isRequired,
+	  inProgress: _react2['default'].PropTypes.bool.isRequired,
+	  progressType: _react2['default'].PropTypes.string,
+	  inLiveMode: _react2['default'].PropTypes.bool.isRequired,
+	  toggleLiveMode: _react2['default'].PropTypes.func.isRequired,
+	  onGeneratePreview: _react2['default'].PropTypes.func.isRequired,
+	  bookTitle: _react2['default'].PropTypes.string.isRequired
 	};
 
-	exports["default"] = Toolbar;
-	module.exports = exports["default"];
+	exports['default'] = Toolbar;
+	module.exports = exports['default'];
 
 /***/ },
 /* 242 */

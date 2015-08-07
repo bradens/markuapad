@@ -25,6 +25,17 @@
       color: #aaa;
     }
   }
+
+  > a.progressMessage {
+    @include transition(opacity 1s ease-in-out);
+    opacity: 0;
+    border: none; 
+    &.active {
+      opacity: .7;
+      background: initial;
+      color: #555;
+    }
+  }
 }
 
 .markuapad .toolbar {

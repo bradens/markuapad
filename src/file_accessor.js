@@ -69,6 +69,14 @@ class FileAccessor {
     this.fileAccessorDelegate.onAdd(...arguments);
   }
 
+  onProgress() {
+    this.fileAccessorDelegate.onProgress(...arguments);
+  }
+
+  onProgressStarted() {
+    this.fileAccessorDelegate.onProgressStarted(...arguments);
+  }
+
   supportsImageUploads() {
     return this.fileAccessorDelegate.supportsImageUploads;
   }

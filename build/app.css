@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Open+Sans);@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Open+Sans);@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css);
 
 button, input[type="button"], input[type="reset"], input[type="submit"],
 button {
@@ -285,6 +285,16 @@ html {
       color: white; }
     .markuapad .toolbar .menus .dropdown > a.disabled, .markuapad .toolbar .actions li > a.disabled {
       color: #aaa; }
+  .markuapad .toolbar .menus .dropdown > a.progressMessage, .markuapad .toolbar .actions li > a.progressMessage {
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    border: none; }
+    .markuapad .toolbar .menus .dropdown > a.progressMessage.active, .markuapad .toolbar .actions li > a.progressMessage.active {
+      opacity: .7;
+      background: initial;
+      color: #555; }
 
 .markuapad .toolbar {
   display: -webkit-box;

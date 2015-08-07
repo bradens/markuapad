@@ -132,6 +132,8 @@
 	    this.onAddCallbacks = [];
 	    this.onDeleteCallbacks = [];
 	    this.onManuscriptChangeCallbacks = [];
+	    this.onProgressStartedCallbacks = [];
+	    this.onProgressCallbacks = [];
 	    this.manifestFilesKey = this.projectRoot + "/manifest_files";
 	    this.manifestCodeKey = this.projectRoot + "/manifest_code";
 	    this.manifestImagesKey = this.projectRoot + "/manifest_images";
@@ -383,6 +385,20 @@
 	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
 
 	      this.onManuscriptChangeCallbacks.push(cb);
+	    }
+	  }, {
+	    key: "onProgress",
+	    value: function onProgress() {
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
+
+	      this.onProgressCallbacks.push(cb);
+	    }
+	  }, {
+	    key: "onProgressStarted",
+	    value: function onProgressStarted() {
+	      var cb = arguments.length <= 0 || arguments[0] === undefined ? noop : arguments[0];
+
+	      this.onProgressStartedCallbacks.push(cb);
 	    }
 	  }]);
 
@@ -2158,6 +2174,20 @@
 	      var _fileAccessorDelegate14;
 
 	      (_fileAccessorDelegate14 = this.fileAccessorDelegate).onAdd.apply(_fileAccessorDelegate14, arguments);
+	    }
+	  }, {
+	    key: "onProgress",
+	    value: function onProgress() {
+	      var _fileAccessorDelegate15;
+
+	      (_fileAccessorDelegate15 = this.fileAccessorDelegate).onProgress.apply(_fileAccessorDelegate15, arguments);
+	    }
+	  }, {
+	    key: "onProgressStarted",
+	    value: function onProgressStarted() {
+	      var _fileAccessorDelegate16;
+
+	      (_fileAccessorDelegate16 = this.fileAccessorDelegate).onProgressStarted.apply(_fileAccessorDelegate16, arguments);
 	    }
 	  }, {
 	    key: "supportsImageUploads",
