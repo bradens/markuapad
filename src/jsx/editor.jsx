@@ -6,6 +6,8 @@ import emacsKeys from "brace/keybinding/emacs"
 import FileAccessor from "../file_accessor";
 import _ from "underscore";
 
+let EDITOR_KEY = 1;
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -21,10 +23,20 @@ class Editor extends React.Component {
     this.setupEditor();
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.currentFile !== this.props.currentFile) {
+      if (this.editor) {
+        this.editor.destroy();
+        EDITOR_KEY = EDITOR_KEY + 1;
+      }
+    }
+  }
+
   // If we get a file change from outside our domain, switch to it.
   // TODO: maybe show a merge warning or something?
   componentDidUpdate(lastProps, lastState) {
     if (lastProps.currentFile !== this.props.currentFile) {
+      this.setState({ currentFileValue: null })
       this.setupEditor();
     }
   }
@@ -56,6 +68,8 @@ class Editor extends React.Component {
 
   // When someone changes the cursor, we need to tell the file that we have a changed cursor
   onCursorChanged() {
+    if (!this.props.currentFile) return;
+
     let count = 0,
         position = this.editor.getCursorPosition(),
         i = 0,
@@ -68,6 +82,8 @@ class Editor extends React.Component {
   // When the editor value changes, then we have to set our current state,
   // then update the file through the data store.
   onEditorChanged() {
+    if (!this.props.currentFile) return;
+
     let value = this.editor.getValue();
 
     if (value === this.state.currentFileValue)
@@ -93,7 +109,7 @@ class Editor extends React.Component {
 
   renderEditor() {
     return (
-      <section ref="editor" className="editor"></section>
+      <section key={EDITOR_KEY} ref="editor" className="editor"></section>
     );
   }
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    markuapad (0.2.1)
+    markuapad (0.2.4)
 
 GEM
   remote: https://rubygems.org/

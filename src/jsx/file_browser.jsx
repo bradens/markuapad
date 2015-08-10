@@ -51,7 +51,7 @@ class FileBrowser extends React.Component {
 
   // We need to rechoose an appropriate file
   onFileDeleted() {
-    this.props.onChangeFile(this.state.files[0])
+    this.props.onChangeFile(null)
   }
 
   // List what text files we have
