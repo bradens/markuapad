@@ -26,7 +26,7 @@ class Toolbar extends React.Component {
 
       // Set up the timer to clear the flash message
       this.timer = setTimeout(() => {
-        this.setState({ error: null })
+        this.setState({ flash: null })
       }, 5000)
     })
   }
