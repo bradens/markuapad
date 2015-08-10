@@ -55896,7 +55896,7 @@
 
 	      // Set up the timer to clear the flash message
 	      _this.timer = setTimeout(function () {
-	        _this.setState({ error: null });
+	        _this.setState({ flash: null });
 	      }, 5000);
 	    });
 	  }
