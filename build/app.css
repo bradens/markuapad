@@ -285,6 +285,9 @@ html {
       color: white; }
     .markuapad .toolbar .menus .dropdown > a.disabled, .markuapad .toolbar .actions li > a.disabled {
       color: #aaa; }
+    .markuapad .toolbar .menus .dropdown > a.error, .markuapad .toolbar .actions li > a.error {
+      color: #fff;
+      background: #FF6347; }
   .markuapad .toolbar .menus .dropdown > a.progressMessage, .markuapad .toolbar .actions li > a.progressMessage {
     -webkit-transition: opacity 1s ease-in-out;
     -moz-transition: opacity 1s ease-in-out;

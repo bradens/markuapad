@@ -12,7 +12,8 @@ _.string = _string;
 
 let DEFAULT_OPTIONS = {
   CHANGED_INTERVAL: 100,
-  enablePreview: true
+  enablePreview: true,
+  blacklistedFiles: ['book.txt']
 }
 
 class Markuapad {
@@ -22,7 +23,7 @@ class Markuapad {
 
   create(elementId, options = {}) {
     // apply options to defaults
-    this.options = _.extend(this.options, options);
+    this.options = _.extend({}, this.options, options);
 
     // Project Root
     let projectTitle = options.title || "My First Markuapad Book";
@@ -35,7 +36,7 @@ class Markuapad {
     FileAccessor.setup(this.options.fileAccessor, projectRoot);
 
     // Render the markuapad
-    React.render(React.createFactory(Main)({ bookTitle: projectTitle, options: options, markua: this.markua, projectRoot: projectRoot }), document.getElementById(elementId));
+    React.render(React.createFactory(Main)({ bookTitle: projectTitle, options: this.options, markua: this.markua, projectRoot: projectRoot }), document.getElementById(elementId));
   }
 }
 

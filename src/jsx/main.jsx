@@ -139,7 +139,7 @@ class Main extends React.Component {
         />
         <section className="main-view">
           <section className={this.getWorkspaceClass()}>
-            <FileBrowser onPreviewImage={this.onPreviewImage} onChangeFile={this.onChangeFile} currentFile={this.state.currentFile} projectRoot={this.props.projectRoot }/>
+            <FileBrowser blacklistedFiles={this.props.options.blacklistedFiles} onPreviewImage={this.onPreviewImage} onChangeFile={this.onChangeFile} currentFile={this.state.currentFile} projectRoot={this.props.projectRoot }/>
             <Editor
               onBookContentChanged={this.onBookContentChanged}
               inLiveMode={this.state.inLiveMode}

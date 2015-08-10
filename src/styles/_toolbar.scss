@@ -24,12 +24,17 @@
     &.disabled {
       color: #aaa;
     }
+
+    &.error {
+      color: #fff;
+      background: #FF6347;
+    }
   }
 
   > a.progressMessage {
     @include transition(opacity 1s ease-in-out);
     opacity: 0;
-    border: none; 
+    border: none;
     &.active {
       opacity: .7;
       background: initial;

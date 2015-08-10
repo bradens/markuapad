@@ -4,6 +4,7 @@ import FileBrowserListItem from "./file_browser_list_item";
 import FileAccessor from "../file_accessor";
 import HTML5Backend from 'react-dnd/modules/backends/HTML5';
 import { DragDropContext } from 'react-dnd';
+import Actions from '../actions/actions';
 
 import _string from "underscore.string";
 _.string = _string;
@@ -129,15 +130,20 @@ class FileBrowser extends React.Component {
   // Actually create a new file
   createFile(e) {
     let fileNode = this.refs.filename.getDOMNode()
-    FileAccessor.new(fileNode.value, this.state.fileMode, '', (error, file) => {
-      fileNode.value = '';
-      this.setState({ creatingFile: false });
-      this[`list${_.string.capitalize(this.state.fileMode)}`]()
 
-      // Change to the new file
-      this.props.onChangeFile(file)
-    });
+    if (this.props.blacklistedFiles.indexOf(fileNode.value.toLowerCase()) !== -1) {
+      Actions.flash('error', `You may not create a file with the name ${fileNode.value} as it is a reserved file.`)
+    }
+    else {
+      FileAccessor.new(fileNode.value, this.state.fileMode, '', (error, file) => {
+        fileNode.value = '';
+        this.setState({ creatingFile: false });
+        this[`list${_.string.capitalize(this.state.fileMode)}`]()
 
+        // Change to the new file
+        this.props.onChangeFile(file)
+      });
+    }
     e.stopPropagation();
     e.preventDefault();
   }
@@ -246,7 +252,8 @@ class FileBrowser extends React.Component {
 FileBrowser.propTypes = {
   projectRoot: React.PropTypes.string.isRequired,
   onChangeFile: React.PropTypes.func.isRequired,
-  currentFile: React.PropTypes.string
+  currentFile: React.PropTypes.string,
+  blacklistedFiles: React.PropTypes.array.isRequired
 };
 
 export default DragDropContext(HTML5Backend)(FileBrowser);

@@ -1,4 +1,5 @@
 import React from "react";
+import Actions from '../actions/actions';
 
 let PROGRESS_TYPE_MAP = {
   'manuscript_update': 'Manuscript Updated.',
@@ -8,6 +9,28 @@ let PROGRESS_TYPE_MAP = {
 }
 
 class Toolbar extends React.Component {
+  state = {
+    flash: null
+  }
+
+  constructor(props) {
+    super(props)
+
+    // Listen to the flash action
+    this.unsub = Actions.flash.listen((type, message) => {
+      // Clear any existing timers
+      clearInterval(this.timer)
+
+      // Set the flash message
+      this.setState({ flash: { type: type, message: message } })
+
+      // Set up the timer to clear the flash message
+      this.timer = setTimeout(() => {
+        this.setState({ error: null })
+      }, 5000)
+    })
+  }
+
   render() {
     return (
       <nav className="toolbar">
@@ -18,6 +41,13 @@ class Toolbar extends React.Component {
               { this.props.inProgress ? <i className="fa fa-refresh fa-spin"></i> : null } { PROGRESS_TYPE_MAP[this.props.progressType] || 'Working...' }
             </a>
           </li>
+          {
+            this.state.flash ?
+              <li onClick={() => this.setState({ flash: null })} key={this.state.flash.type}>
+                <a className={`${this.state.flash.type}`}>{ this.state.flash.message }</a>
+              </li>
+            : null
+          }
           {
             this.props.enablePreview  ?
               [
