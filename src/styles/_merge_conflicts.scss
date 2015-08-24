@@ -1,0 +1,51 @@
+.markuapad .merge-conflicts-modal {
+  .modal-fade-screen {
+    padding-top: 4em;
+  }
+
+  .modal-inner {
+    max-height: 95%;
+    width: 80%;
+  }
+
+  .conflict-explanation {
+    padding: 1em;
+    background: #fcc;
+    border: thin solid #faa;
+    text-shadow: 0 1px 0 #fff;
+    border-radius: 4px;
+  }
+
+  .conflict-wrapper {
+    @include display(flex);
+    @include flex(1 1 100%);
+    @include flex-flow(row nowrap);
+    padding: 20px 0;
+  }
+
+  .conflict-content {
+    @include flex(1);
+    padding: 1em;
+
+    &.client-version {
+      border-right: thin dashed #ddd;
+    }
+
+    h6 {
+      border-bottom: thin dashed #ddd;
+      font-weight: 700;
+      padding-bottom: 1em;
+    }
+  }
+
+  .conflict-actions {
+    text-align: center;
+    li {
+      display: inline-block;
+      @extend %nav-button;
+      > a {
+        border-color: #eee;
+      }
+    }
+  }
+}

@@ -45,6 +45,7 @@ class ExampleFileAccessor {
     this.onManuscriptChangeCallbacks = [];
     this.onProgressStartedCallbacks = [];
     this.onProgressCallbacks = [];
+    this.onMergeConflictCallback = null;
     this.manifestFilesKey = `${this.projectRoot}/manifest_files`;
     this.manifestCodeKey = `${this.projectRoot}/manifest_code`;
     this.manifestImagesKey = `${this.projectRoot}/manifest_images`;
@@ -74,6 +75,7 @@ class ExampleFileAccessor {
 
   listFiles(cb = noop) {
     let files = _.map(getCached(this.manifestFilesKey), (f) => { return _.extend(f, { type: "manuscript" }); });
+
     cb(null, files);
   }
 
@@ -184,6 +186,10 @@ class ExampleFileAccessor {
 
   onProgressStarted(cb = noop) {
     this.onProgressStartedCallbacks.push(cb);
+  }
+
+  onMergeConflicts(cb = noop) {
+    this.onMergeConflictCallback = cb;
   }
 }
 

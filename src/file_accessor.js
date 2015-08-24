@@ -80,6 +80,10 @@ class FileAccessor {
   supportsImageUploads() {
     return this.fileAccessorDelegate.supportsImageUploads;
   }
+
+  onMergeConflicts() {
+    return this.fileAccessorDelegate.onMergeConflicts(...arguments);
+  }
 }
 
 export default new FileAccessor();

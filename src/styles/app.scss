@@ -28,6 +28,7 @@
 @import "preview";
 @import "workspace";
 @import "modal";
+@import "merge_conflicts";
 
 .markuapad {
   @include display(flex);
