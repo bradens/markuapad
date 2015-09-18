@@ -30,7 +30,7 @@ class Markuapad {
     let projectRoot = options.slug || _.string.slugify(projectTitle);
 
     // Instantiate a new markua processor instance
-    this.markua = new Markua(projectRoot, { fileAccessor: this.options.fileAccessor })
+    this.markua = new Markua(projectRoot, { fileAccessor: this.options.fileAccessor });
 
     // Setup the markuapad file accessor
     FileAccessor.setup(this.options.fileAccessor, projectRoot);
