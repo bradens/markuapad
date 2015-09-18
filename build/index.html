@@ -7,25 +7,18 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <section className="about">
-      <article id="markuapad-hero">
-        <h2><img width='150' src="/images/markua-logo.png"/></h2>
-        <p>
-          Markua is an editor for documents written using the new <a href="http://markua.org">Markua</a> specification for writing books.
-          If you want to read the specification, check it out <a href="http://leanpub.com/markua">here</a>, or
-          if you want to just try it out, start typing in the editor below!
-        </p>
-        <a id="markuapad-hero-close" href="javascript:" class="close fa fa-times"></a>
-      </article>
+    <section id="markuapad-about">
+      <img height='50' src="/images/markua-logo.png"/>
+      <ul class="nav-links">
+        <li><a href="http://markua.com">Website</a></li>
+        <li><a href="https://leanpub.com/markua">Spec</a></li>
+        <li><a href="https://github.com/bradens/markuapad/archive/master.zip">Download</a></li>
+      </ul>
     </section>
     <section id="main">
     </section>
     <script type="text/javascript" src="browser-polyfill.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript" src="web.js"></script>
-    <script type="text/javascript">
-      // Initialize the header button closablity
-      document.getElementById("markuapad-hero-close").onclick = function(e) { document.getElementById("markuapad-hero").remove(); };
-    </script>
   </body>
 </html>
