@@ -34,7 +34,7 @@ class Toolbar extends React.Component {
   render() {
     return (
       <nav className="toolbar">
-        <h3 className="book-title">{ this.props.bookTitle}</h3>
+        <h3 className="book-title">{ this.props.bookTitle } <img src="/assets/images/markua-logo.png"/></h3>
         <ul className="actions">
           <li>
             <a className={`progressMessage ${this.props.inProgress ? 'active' : ''}`}>
