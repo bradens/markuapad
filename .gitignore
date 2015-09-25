@@ -19,6 +19,7 @@
 nbproject
 Thumbs.db
 .projectile
+.tern-port
 
 # NPM packages folder.
 node_modules/
