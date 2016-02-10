@@ -2,7 +2,6 @@ import React from "react";
 import ace from "brace";
 import javascript from "brace/mode/markdown";
 import monokai from "brace/theme/xcode";
-import emacsKeys from "brace/keybinding/emacs"
 import FileAccessor from "../file_accessor";
 import _ from "underscore";
 
@@ -52,7 +51,6 @@ class Editor extends React.Component {
     // Set all editor related properties here.
     this.editor = ace.edit(this.refs.editor.getDOMNode());
     this.editor.setTheme('ace/theme/xcode');
-    this.editor.setKeyboardHandler('ace/keyboard/emacs');
     this.editor.renderer.setShowGutter(false);
     this.editor.renderer.setPadding(20);
     this.editor.renderer.setScrollMargin(20);
