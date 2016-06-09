@@ -18,10 +18,15 @@ class ImageModal extends React.Component {
   getSelectedImageDataURI() {
     let imageFile = FileAccessor.getSync(this.props.file.filename, "image")
 
-    if (!imageFile || !imageFile.data)
+    if (!imageFile)
       return null
 
-    return `data:${imageFile.mimetype.string};base64,${imageFile.data}`
+    if (imageFile.data)
+      return `data:${imageFile.mimetype.string};base64,${imageFile.data}`
+    else if (imageFile.url)
+      return imageFile.url
+    else
+      return null
   }
 
   render() {

@@ -7,16 +7,18 @@ export let fixImagePaths = (htmlString, rerun) => {
   let matches = htmlString.match(allImageTagFixRegex);
 
   for (let match of matches || []) {
-    // Get the base64 url for the image
     let key = match.substr(match.lastIndexOf("/") + 1)
     let file = FileAccessor.getSync(key, "image", rerun);
+    let uri;
 
-    if (!file || !file.data) {
+    if (!file) {
       FileAccessor.get(key, rerun, "image");
       continue;
+    } else if (file.data) {
+      uri = `data:${file.mimetype.string};base64,${file.data}`
+    } else if (file.url) {
+      uri = file.url
     }
-
-    let uri = `data:${file.mimetype.string};base64,${file.data}`
     htmlString = htmlString.replace(imageTagFixRegex, `src="${uri}`)
   }
   return htmlString;
