@@ -28,4 +28,11 @@ Run the following:
 * `npm install && bower install`
 * `webpack-dev-server`
 
+#### To deploy the gem
+
+* `./prepare_gem`
+* update lib/markuapad/version.rb
+* `gem build markuapad.gemspec`
+* `gem push markuapad-<version>.gem`
+
 and you should be up an running on `http://localhost:8080`
