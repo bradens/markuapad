@@ -129,12 +129,19 @@
 
     span {
       @include transition(transform $base-transition-duration/2 ease-in-out);
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==');
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAHlBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC3KG9qAAAACXRSTlMAFCY+X2LBxf3XCPhEAAAAPElEQVQIWzXIQQ0AIBADwQVyVshZQQFBEUEBwS2ftp9OFgAKWtfXLeRVOEK+qyDkE4YRBssIg2WEwTQafFyuEBqkf7/SAAAAAElFTkSuQmCC');
       background-position: center;
       background-repeat: no-repeat;
       display: inline-block;
-      height: 16px;
-      width: 16px;
+      height: 32px;
+      width: 32px;
+      background-size: 14px;
+    }
+
+    opacity: .5;
+
+    &:hover {
+      opacity: 1;
     }
   }
 
@@ -144,16 +151,20 @@
     .new-file { display: block; }
 
     .close-button span {
-      @include transform(rotate(-90deg));
+      @include transform(rotate(0deg));
     }
   }
 
   // Closed state
   &.closed {
     @include flex-basis(0);
+    min-width: 32px;
     .new-file { display: none; }
     .close-button span {
-      @include transform(rotate(90deg));
+      @include transform(rotate(180deg));
+    }
+    > *:not(.close-button) {
+      display: none;
     }
   }
 }
