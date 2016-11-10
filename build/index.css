@@ -1,1 +1,24 @@
-#markuapad-about{padding:20 10 0}#markuapad-about .nav-links{float:right;list-style-type:none;height:50px;line-height:50px}#markuapad-about .nav-links li{vertical-align:middle;display:inline-block;margin:0 5px}#markuapad-about .nav-links li a{color:#777}#markuapad-about .nav-links li a:hover{color:#222}html,body{height:100%}body{background:#f5f5f5;font-family:'Open Sans',sans-serif;margin:0 8px}
+#markuapad-about {
+  padding: 20 10 0 10; }
+  #markuapad-about .nav-links {
+    float: right;
+    list-style-type: none;
+    height: 50px;
+    line-height: 50px; }
+    #markuapad-about .nav-links li {
+      vertical-align: middle;
+      display: inline-block;
+      margin: 0 5px; }
+      #markuapad-about .nav-links li a {
+        color: #777; }
+        #markuapad-about .nav-links li a:hover {
+          color: #222; }
+
+html,
+body {
+  height: 100%; }
+
+body {
+  background: #f5f5f5;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 8px; }
